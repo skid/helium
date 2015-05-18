@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!-- 
+  Helium general demo page.
+  You can see the layout framework and all styles here.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Helium Fusion Compound</title>
+  <style>
+    .coldemo{
+      padding: 10px;
+      border: solid 1px #4E342E;
+      background: #D7CCC8;
+      color: #4E342E;
+    }
+    .weekend {
+      color: #999999 !important;
+      background: #ededed;
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="/static/css/core.css" media="screen"><!-- Layout -->
+  <link rel="stylesheet" type="text/css" href="/static/css/layout.css" media="screen"><!-- Layout -->
+  <link rel="stylesheet" type="text/css" href="/static/css/layout-theme.css" media="screen"><!-- Layout Theme -->
+  <link rel="stylesheet" type="text/css" href="/static/css/theme.css" media="screen"><!-- Controls Theme -->
+
+  <link rel="stylesheet" type="text/css" href="/static/css/panel.css" media="screen"><!-- Utilities (tooltips) Styles -->
+  <link rel="stylesheet" type="text/css" href="/static/css/button.css" media="screen"><!-- Buttons styles -->
+  <link rel="stylesheet" type="text/css" href="/static/css/input.css" media="screen"><!-- Input styles -->
+  <link rel="stylesheet" type="text/css" href="/static/css/list.css" media="screen"><!-- List styles -->
+  <link rel="stylesheet" type="text/css" href="/static/css/grid.css" media="screen"><!-- Grid styles -->
+  <link rel="stylesheet" type="text/css" href="/static/css/calendar.css" media="screen"><!-- Calendar styles -->
+  <link rel="stylesheet" type="text/css" href="/static/css/menu.css" media="screen"><!-- Calendar styles -->
+  
+  <script type="text/javascript" src="/static/lib/jquery-2.1.1.js"></script><!-- Only used for ajax -->
+  <script src="/static/lib/lodash-3.8.0.js"></script><!-- External dependency -->
+  <!-- scripts -->
+</head>
+<body>
+  <div id="header">
+    <h1>Helium <small>unified layout and controls</small></h1>
+  </div>
+
+  <div id="main">
+    <div style="width: calc(100% - 50px); margin-left: 25px;">      
+      <h2>Some cool buttons</h2>
+      <div class="row">
+        <div class="col-1">
+          <label>A label</label>
+          <button type="button" id="button-1">A button</button>
+        </div>
+        <div class="col-1">
+          <label>Long text label that is cutoff</label>
+          <button type="button" id="button-2">Long text button that is cutoff</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-3">Unlabeled Btn</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-4">Icooons!</button>
+        </div>
+        <div class="col-1">
+          <label>Disabled Buttons</label>
+          <button type="button" id="button-5">Unlabeled Btn</button>
+        </div>
+        <div class="col-1">
+          <label>Colored</label>
+          <button type="button" id="button-6" class="he-blue">Blue Button</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-7" class="he-green">Green Btn</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-8" class="he-yellow">Yellow Btn</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-9" class="he-red">Red Btn</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-modal-1" class="he-red">Opens a modal</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-modal-2" class="he-red">Opens a modal</button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-1">
+          <button type="button" id="checkbox-1">A Checkbox</button>
+        </div>
+        <div class="col-2">
+          <label>Multiple Checkboxes with a common label</label>
+          <button type="button" id="checkbox-2">Option 1</button>
+          <button type="button" id="checkbox-3">Option 2</button>
+          <button type="button" id="checkbox-4">Option 3</button>
+        </div>
+        <div class="col-2">
+          <button type="button" id="radio-1">Radio 1</button>
+          <button type="button" id="radio-2">Radio 2</button>
+          <button type="button" id="radio-3">Radio 3</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-10" class="he-green">Green Disabled</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-11" class="he-yellow">Yellow Disabled</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-12" class="he-red">Red Disabled</button>
+        </div>
+        <div class="col-1">
+          <button type="button" id="button-13" class="he-blue">Blue Disabled</button>
+        </div>
+      </div>
+      
+      <h2>Some cool inputs</h2>
+      <div class="row">
+        <div class="col-1">
+          <button id="button-14"></button>
+        </div>
+        <div class="col-2">
+          <label id="input-1-label">A Standard input</label>
+          <input id="input-1">
+        </div>
+        <div class="col-1">
+          <label id="input-2-label">A Disabled input</label>
+          <input id="input-2" value="Some value">
+        </div>
+        <div class="col-2">
+          <label id="input-3-label">An errored input</label>
+          <input id="input-3">
+        </div>
+        <div class="col-1">
+          <input id="input-4" value="Mousover tooltip">
+        </div>
+        <div class="col-1">
+          <label id="input-5-label">Numbers</label>
+          <input id="input-5">
+        </div>
+        <div class="col-1">
+          <label id="input-6-label">Dates</label>
+          <input id="input-6">
+        </div>
+        <div class="col-1">
+          <label id="input-7-label">Input with an icon</label>
+          <input id="input-7">
+        </div>
+        <div class="col-1">
+          <input id="input-8">
+        </div>
+      </div>
+      
+      <h2>Lists. Lists are everything</h2>
+      <div class="row">
+        <div class="col-2">
+          <label id="list-4-label">Scroll List</label>
+          <div id="list-4" style="height:100px"></div>
+        </div>
+        <div class="col-1">
+          <label id="list-1-label">Buton List</label>
+          <div id="list-1"></div>
+        </div>
+        <div class="col-1">
+          <div id="list-2"></div>
+        </div>
+        <div class="col-2">
+          <label id="list-1-label">Custom rendered button list</label>
+          <div class="row">
+            <style>
+              #list-7-1 > *, #list-7-2 > * { display: block; }
+            </style>
+            <div id="list-7-1" class="col-6"></div>
+            <div id="list-7-2" class="col-6"></div>
+          </div>
+        </div>
+        <div class="col-1">
+          <label id="list-3-label">Dropdown List</label>
+          <button type="button" id="list-3"></button>
+        </div>
+        <div class="col-1">
+          <label id="list-6-label">Dropdown List 2</label>
+          <button type="button" id="list-6"></button>
+        </div>
+        <div class="col-2">
+          <label id="list-5-label">Autocomplete List</label>
+          <input id="list-5">
+        </div>
+        <div class="col-2">
+          <label id="list-8-label">Autocomplete Ajax List</label>
+          <input id="list-8">
+        </div>
+      </div>
+      
+      <h2>All the power of the grid!</h2>
+      <div class="row">
+        <div id="col-6">
+          <label id="grid-1-label">Grids have labels too. Why not?</label>
+          <div id="grid-1" style="height:400px; border: solid 1px #ccc"></div>
+          <div id="grid-1-pagination" style="margin: 10px 0; text-align: center">
+            <!--Pagination goes here -->
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <div id="footer">
+    <p>This is a footer &reg; with some accented colors</p>
+  </div>
+  
+  <div id="modal-1" class="he-modal" style="max-width: 50%">
+    <h2>Modal 1</h2>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </p>
+    <p style="text-align:right">
+      <button id="modal-1-close">Close</button>
+    </p>
+  </div>
+  
+  <div id="modal-2" class="he-modal" style="max-width: 50%">
+    <h2>Modal 2 - with controls</h2>
+    <div class="row">
+      <div class="col-4">
+        <label>Autocomplete</label>
+        <input id="modal-autocomplete">
+      </div>
+      <div class="col-4">
+        <label>Datepicker</label>
+        <input id="modal-datepicker">
+      </div>
+      <div class="col-4">
+        <label>Dropdown Else</label>
+        <button id="modal-dropdown">Select</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3 off-9">
+        <button id="modal-2-close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-3" class="he-modal" style="width: 400px">
+    <h4>Pick Colors</h4>
+    <div class="row">
+      <div class="col-6">
+        <label>Available</label>
+        <div id="grid-list-1" style="height:200px"></div>
+      </div>
+      <div class="col-6">
+        <label>Selected</label>
+        <div id="grid-list-2" style="height:200px"></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 off-8">
+        <button id="grid-ok">OK</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="/static/dev/index.js"></script>
+</body>
+</html>

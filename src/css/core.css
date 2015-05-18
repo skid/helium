@@ -1,0 +1,39 @@
+/* We handle our own outlines */
+.he-button, .he-input, .he-scroll-list, .he-checkbox, .he-token-list {
+  outline: none;
+}
+
+/* Remove the mozilla focus dotted border */
+.he-button::-moz-focus-inner, .he-checkbox::-moz-focus-inner, .he-token-list::-moz-focus-inner {
+  border: 0;
+}
+
+/* Remove the crappy IE clear button */
+.he-input::-ms-clear {
+  display: none;
+}
+
+/* Hides stuff */
+.he-hidden {
+  display: none !important;
+}
+
+/* Position fixed */
+.he-fixed {
+  position: fixed !important;
+}
+
+/* Disable text selection */
+.he-noselect {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+body.noscroll {
+  position: fixed; 
+  overflow-y: scroll;
+  width: 100%;
+}

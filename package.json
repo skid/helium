@@ -1,0 +1,19 @@
+{
+  "name": "helium",
+  "version": "0.1.0",
+  "description": "Better UI controls for business applications",
+  "main": "dev/server.js",
+  "dependencies": {
+    "lodash": ">=3.8.0"
+  },
+  "devDependencies": {
+    "connect": "^3.3.4",
+    "qs": "^2.3.3",
+    "serve-static": "^1.8.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dusko Jordanovski",
+  "license": "MIT"
+}

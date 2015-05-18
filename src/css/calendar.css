@@ -1,0 +1,103 @@
+/**
+ * Helium Calendar styles
+**/
+
+.he-calendar {
+  background: white;
+  border: solid 1px #616161;
+  color: rgba(100, 100, 100, 1);
+  padding: 2px;
+  box-sizing: border-box;
+  width: 294px;
+  height: 242px;
+}
+
+.he-calendar *::selection {
+  background: transparent;
+}
+
+.he-calendar *::-moz-selection {
+  background: transparent;
+}
+
+.he-calendar > div {
+  vertical-align: middle;
+}
+
+.he-calendar .he-years {
+  display: inline-block;
+  background: white;
+}
+
+.he-calendar .he-months {
+  display: inline-block;
+  background: white;
+}
+
+.he-calendar .he-dates {
+  display: inline-block;
+  background: white;
+  margin-left: 20px;
+}
+
+.he-calendar .he-years, .he-calendar .he-months {
+  font-size: 1em;
+  width: 3.3em;
+  margin: 0.1em;
+  text-align: center;
+}
+
+.he-calendar .he-months > div, .he-calendar .he-years > div {
+  height: 1.5em;
+  cursor: pointer;
+}
+
+.he-calendar .he-years > div > svg {
+  position: relative;
+  top: -2px;
+  width: 1.5em;
+  height: 1.5em;
+  fill: rgba(100, 100, 100, 1);
+  
+  /* Required so that a click will have its parent as a target */
+  pointer-events: none;
+}
+
+.he-calendar .he-dates table {
+  border-spacing: 0;
+}
+
+.he-calendar .he-dates td {
+  padding: 0.3em;
+  text-align: center;
+  cursor: pointer;
+  border: solid 2px transparent;
+}
+
+.he-calendar .he-dates th {
+  font-weight: bold;
+  text-align: center;
+}
+
+
+.he-calendar .he-years .he-active {
+  background-color: rgba(86, 119, 252, 1);
+  color: white;
+}
+
+.he-calendar .he-months .he-active {
+  background-color: rgba(86, 119, 252, 1);
+  color: white;
+}
+
+.he-calendar .he-dates td.he-active {
+  color: rgba(86, 119, 252, 1);
+  font-weight: bold;
+  border-bottom-color: rgba(86, 119, 252, 1);
+}
+
+
+/* floating datepickers */
+.he-box.he-calendar {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}

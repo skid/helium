@@ -1,0 +1,49 @@
+.he-menu {
+  
+}
+.he-menu-item {
+  position: relative;
+  padding: 0.2em 1.7em 0.2em 1.7em;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.he-menu-item:before, .he-menu-item:after { content: " "; display: table; }
+.he-menu-item:after { clear: both; }
+
+.he-menu-item .he-scroll-list {
+  border: none;
+  margin: -0.2em -1.7em -0.2em -1.7em;
+}
+.he-menu-item .he-scroll-list .he-list-item {
+  padding-right: 1.7em;
+}
+
+.he-menu-item .he-title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  float: left;
+  text-align: left;
+  position: relative;
+  left: -1.2em;
+}
+
+.he-menu-item .he-title:first-child {
+  left: 0;
+}
+
+.he-menu-item > svg {
+  height: 16px;
+  width: 16px;
+}
+.he-menu-item > svg:first-child {
+  float: left;
+  position: relative;
+  left: -1.5em;
+}
+.he-menu-item > svg:last-child {
+  float: right;
+  position: relative;
+  left: 1.5em;
+}

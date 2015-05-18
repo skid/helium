@@ -1,0 +1,3 @@
+- Controls don't prevent value setting (philosophy behind this)
+- Controls use very little DOM elements and support only modern browsers
+- How to read the docs (inheritance)

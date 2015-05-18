@@ -1,0 +1,140 @@
+/**  
+ * Tooltip and panel colors. 
+ * Take a look at helium-layout-theme.css 
+ *  
+ * Colors: 
+ *  
+ *  -- Grey --
+ *    Background: #EEEEEE (200) 
+ *    Border: #616161 (700)  
+ * 
+ * -- Disabled Grey -- 
+ *    Background: #FAFAFA (50) 
+ *    Border: #BDBDBD (400) 
+ *  
+ * -- Blue -- 
+ *    Background: #1976D2 (700)
+ *    Border: #E3F2FD (50) 
+ *  
+ * -- Green -- 
+ *    Background: #388E3C (700)
+ *    Border: #E8F5E9 (50)
+ *  
+ * -- Yellow -- 
+ *    Background: #FFA000 (700)
+ *    Border: #FFF8E1 (50) 
+ *  
+ * -- Red -- 
+ *    Background: #D32F2F (700)
+ *    Border: #FFEBEE (50)
+**/
+.he-box {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 3; /* Higher than the overlay and modal */
+  
+  /* We add these to prevent large panels from pushing the  
+  scrollbar. The panels will be positioned later anyway. */
+  top: -10000px;
+  left: -10000px;
+  box-sizing: border-box;
+}
+
+.he-box.he-shown {
+  visibility: visible;
+  opacity:    1;
+}
+
+
+/* Arrow styles */
+.he-box.he-arrow {
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px;
+}
+.he-box.he-arrow:after, .he-box.he-arrow:before {
+  position: absolute;
+	content: " ";
+	height: 0;
+	width: 0;
+	pointer-events: none;
+  border-style: solid;
+  border-color: transparent;
+}
+.he-box.he-arrow:after { border-width: 6px; }
+.he-box.he-arrow:before { border-width: 8px; }
+
+.he-box.he-arrow.he-below:after, .he-box.he-arrow.he-below:before { bottom: 100%; left: 50%; }
+.he-box.he-arrow.he-below:before { margin-left: -8px; }
+.he-box.he-arrow.he-below:after { margin-left: -6px; }
+
+.he-box.he-arrow.he-above:after, .he-box.he-arrow.he-above:before { top: 100%; left: 50%; }
+.he-box.he-arrow.he-above:before { margin-left: -8px; }
+.he-box.he-arrow.he-above:after { margin-left: -6px; }
+
+.he-box.he-arrow.he-before:after, .he-box.he-arrow.he-before:before { left: 100%; top: 50%; }
+.he-box.he-arrow.he-before:before { margin-top: -8px; }
+.he-box.he-arrow.he-before:after { margin-top: -6px; }
+
+.he-box.he-arrow.he-after:after, .he-box.he-arrow.he-after:before { right: 100%; top: 50%; }
+.he-box.he-arrow.he-after:before { margin-top: -8px; }
+.he-box.he-arrow.he-after:after { margin-top: -6px; }
+
+/* Tooltip margins */
+.he-box.he-tooltip {
+  padding: 5px;
+}
+
+.he-overlay {
+  position: fixed;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.2);
+  top: 0; left: 0; bottom: 0; right: 0;
+}
+
+/* Modals */
+.he-modal {
+  position: absolute;
+  z-index: 2;
+  visibility: hidden;
+  top: -1000px;
+  left: -1000px;
+  opacity: 0;
+  transform: translate(0, -50px);
+}
+.he-modal.he-modal-shown {
+  position: fixed;
+  visibility: visible;
+  opacity: 1;
+  transform: translate(0, 0);
+  transition: transform .3s ease-out, opacity .3s ease-out;
+}
+.he-modal-close-icon {
+  display: block;
+  line-height: 0.7;
+  cursor: pointer;
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+  z-index: 2; /* Higher than the overlay and modal */  
+  transform: translate(0, -50px);
+}
+.he-modal-close-icon:before {
+  content: "×";
+  font-family: "Arial";
+  font-weight: bold;
+  font-size: 30px;
+  color: #fff;
+  text-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.he-modal-close-icon.he-shown {
+  visibility: visible;
+  opacity:    1;
+  transform: translate(0, 0);
+  transition: transform .3s ease-out, opacity .3s ease-out;
+}

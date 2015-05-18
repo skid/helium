@@ -1,0 +1,181 @@
+/* The master container, and original element */
+.he-grid {
+  display: block;
+  overflow: hidden;
+}
+
+/* General */
+.he-cell {
+  box-sizing: padding-box;
+}
+
+/* The header section */
+.he-header-container {
+  overflow: hidden;
+}
+
+.he-header {
+  display: table;
+  table-layout: fixed;
+  padding-right: 100px;
+}
+
+/* For some reason Webkit browsers don't align the header properly  */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .he-header { 
+    transform: translate(1px); 
+    -webkit-transform: translate(1px);
+  }
+}
+
+.he-header .he-row {
+  display: table-row;
+}
+
+.he-header .he-row .he-cell {
+  box-sizing: border-box;
+  display: table-cell;
+}
+
+
+/* The body section */
+.he-table-container {
+  position: relative; /* Needs to be the scrollable offset parent */
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.he-table {
+  display: table;
+  table-layout: fixed;
+}
+
+.he-table .he-row {
+  display: table-row;
+}
+
+.he-table .he-cell {
+  display: table-cell;
+  overflow: hidden;
+}
+
+
+/* The footer section */
+.he-footer-container {
+  
+}
+
+/* The column menus */
+.he-menu-item .he-filter-controls {
+  border: none;
+  margin: -0.2em -1.7em;
+  padding: 0.2em;
+}
+
+.he-menu-item .he-filter-controls.he-scroll-list {
+  padding: 0;
+}
+
+.he-menu-item .he-filter-controls > div {
+  
+}
+
+.he-menu-item .he-filter-controls > div.he-row > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.he-menu-item .he-filter-controls > div > svg {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.2em;
+}
+
+/**  
+ * Theme styles
+**/
+.he-grid {
+  /*border: solid 1px rgba(0,0,0,0.2);*/
+}
+
+.he-header-container {
+  /*border-bottom: solid 1px rgba(0,0,0,0.4);*/
+}
+
+.he-header {
+  
+}
+
+.he-header .he-cell {
+  position: relative;
+}
+
+.he-header .he-cell .he-handle {
+  position: absolute;
+  border-right: solid 1px rgba(0,0,0,0.2);
+  width: 3px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.he-header .he-cell .he-handle.he-resize {
+  cursor: ew-resize;
+}
+
+.he-header .he-cell .he-opts {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  opacity: 0.1;
+  border-left: solid 1px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.9);
+  box-sizing: border-box;
+  padding: 1px 5px;
+  cursor: pointer;
+}
+
+.he-header .he-cell:hover .he-opts, .he-header .he-cell .he-opts.he-menu-open {
+  opacity: 1;
+}
+
+.he-header .he-cell .he-opts svg {
+  display: inline-block;
+  vertical-align: middle;
+  height: 16px;
+  width: 16px;
+}
+
+.he-table {
+  border-collapse: collapse;
+}
+
+.he-table .he-row {
+  
+}
+
+
+.he-table .he-cell {
+  position: relative;
+  box-sizing: border-box;
+  border-right: solid 1px rgba(0,0,0,0.1);
+  border-bottom: solid 1px rgba(0,0,0,0.1);
+}
+
+.he-resize-ruler {
+  position: absolute;
+  background: gray;
+  width: 2px;
+}
+
+.he-cell .he-cc {
+  margin: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.he-wordbreak .he-cell .he-cc {
+  white-space: normal;
+}

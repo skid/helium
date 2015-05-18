@@ -1,0 +1,42 @@
+/**
+ * Helium input styles 
+ * These are non-negotiable and not part of the theme.
+**/
+.he-input {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0;
+  height: 2rem;
+  font-size: 100%;
+  outline: none;
+}
+textarea.he-input {
+  height: auto;
+  width: auto;
+  resize: none;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+.he-input.he-disabled::selection { 
+  background: transparent; /* WebKit/Blink Browsers */ 
+}
+.he-input.he-disabled::-moz-selection { 
+  background: transparent; /* Gecko Browsers */ 
+}
+.he-input.he-number {
+  text-align: right;
+}
+.he-input.he-date {
+  text-align: center;
+}
+
+/* Grid edit controls are hidden by default */
+.he-input.he-grid-control {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+}
+.he-input.he-grid-control.he-shown {
+  opacity: 1;
+  visibility: visible;
+}

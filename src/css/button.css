@@ -1,0 +1,49 @@
+/* Basic button style */
+.he-button {
+  margin: 0;
+  height: 2rem;
+  padding: 0 5px;
+  font-size: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.he-button:active {
+  padding: 0 5px;
+}
+
+/* Checkboxes */
+.he-checkbox {
+  display: inline-block;
+  margin: 0 5px 0 0;
+  padding: 0;
+  height: 1.8rem;
+  font-size: 100%;
+  line-height: 1.8rem;
+  background-color: transparent !important;
+  border: solid 1px transparent;
+  text-align: left;
+}
+.he-button-checkbox:active{
+  padding: 0;
+}
+
+/* Positioning the icon */
+.he-button svg, .he-checkbox svg {
+  display: inline-block;
+  height: 1.3em;
+  width: 1.3em;
+  margin: 0;
+  vertical-align: text-top;
+
+  /* This sucks .. not really aligned */
+  position: relative;
+  bottom: 1px;
+  left: 0px;
+}
+
+.he-button:active, .he-checkbox:active {
+  padding-top: 0;
+  padding-bottom: 0;
+}
