@@ -42,13 +42,13 @@
 
 .he-calendar .he-years, .he-calendar .he-months {
   font-size: 1em;
-  width: 3.3em;
+  width: 40px;
   margin: 0.1em;
   text-align: center;
 }
 
 .he-calendar .he-months > div, .he-calendar .he-years > div {
-  height: 1.5em;
+  height: 19px;
   cursor: pointer;
 }
 

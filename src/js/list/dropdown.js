@@ -80,7 +80,7 @@
     });
 
     this.list.on('he:change', function(options){
-      self.button.option('text', self.list.val() ? self.list.text() : self.$options.placeholder);
+      self.button.option('text', (self.list.val() != null) ? self.list.text() : self.$options.placeholder);
       self.$nullable();
       options.silent || self.trigger('change', options);
     });
@@ -121,7 +121,7 @@
     $nullable: function(){
       var self = this;
       var nullable = this.$options.nullable;
-      if(nullable && this.val()){
+      if(nullable && this.val() != null){
         this.button.option({ icon: "close", iconclick: function(){
           self.val(null);
         }});

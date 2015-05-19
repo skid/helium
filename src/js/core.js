@@ -14,7 +14,6 @@
     if(!type) {
       return null;
     }
-
     // Trying to lookup an existing helium control
     if(element === undefined && options === undefined){
       var el = typeof type === "string" ? document.getElementById(type) : type;
@@ -24,7 +23,16 @@
     else if(options === undefined){
       options = element;
     }
-    else if(element.getAttribute('data-heid') in CACHE){
+    
+    // This is wrong
+    if(typeof element === 'string'){
+      element = document.getElementById(element);
+    }
+    
+    if(!element) {
+      throw new Error('No element passed to Helium() constructor.');
+    }
+    if(element.getAttribute('data-heid') in CACHE){
       throw new Error('Element is already initialized as a Helium control');
     }
 
