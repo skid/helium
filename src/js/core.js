@@ -19,20 +19,19 @@
       var el = typeof type === "string" ? document.getElementById(type) : type;
       return CACHE[el.getAttribute('data-heparentid')];
     }
-    // Trying to create a control that has no HTML element associated, like a menu
-    else if(options === undefined){
-      options = element;
-    }
-    
-    // This is wrong
-    if(typeof element === 'string'){
+    // Passed an element id
+    else if(typeof element === 'string'){
       element = document.getElementById(element);
     }
     
-    if(!element) {
+    // Trying to create a control that has no HTML element associated, like a menu
+    if(_.isPlainObject(element)){
+      options = element;
+    }
+    else if(!element) {
       throw new Error('No element passed to Helium() constructor.');
     }
-    if(element.getAttribute('data-heid') in CACHE){
+    else if(element.getAttribute('data-heid') in CACHE){
       throw new Error('Element is already initialized as a Helium control');
     }
 
