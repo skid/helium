@@ -23,7 +23,7 @@
     else if(typeof element === 'string'){
       element = document.getElementById(element);
     }
-    
+
     // Trying to create a control that has no HTML element associated, like a menu
     if(_.isPlainObject(element)){
       options = element;

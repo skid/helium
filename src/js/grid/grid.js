@@ -462,6 +462,7 @@
           // Move the latest sorted column to the beginning
           _.each(sorting, function(sort){ sort.order < old.order && (sort.order++); });
           old.order = 0;
+          old.direction = direction;
         }
       }
       else if(direction !== 'clear'){
