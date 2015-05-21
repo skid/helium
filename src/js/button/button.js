@@ -28,7 +28,7 @@
   };
 
   var proto = he.abstract.control.prototype;
-  Button.prototype = he.util.inherits(proto, he.mixins.disableable, he.mixins.tooltip, he.mixins.labeled, he.mixins.errored, {
+  Button.prototype = he.util.inherits(proto, he.mixins.disableable, he.mixins.tooltip, he.mixins.errored, he.mixins.labeled, {
     $defaults: {
       iconpos: 'before'
     },

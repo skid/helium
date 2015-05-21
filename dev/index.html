@@ -8,23 +8,45 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Helium Fusion Compound</title>
+  <link rel="stylesheet" type="text/css" href="/static/dev/layout.css" media="screen"><!-- Layout -->
   <style>
-    .coldemo{
-      padding: 10px;
-      border: solid 1px #4E342E;
-      background: #D7CCC8;
-      color: #4E342E;
+    body {
+      font-family: Ubuntu, monospace;
+      font-size: 14px;
+    }
+    .color-square {
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      margin-right: 4px;
+      vertical-align: baseline;
+      position: relative;
+      top: 1px;
     }
     .weekend {
       color: #999999 !important;
       background: #ededed;
     }
+    #list6-1, #list6-2 {
+      border: solid 1px #ccc;
+      padding: 5px;
+    }
+    #list6-1 button, #list6-2 button {
+      margin: 0;
+      display: block;
+    }
+    #menu1-open {
+      line-height: 2rem;
+      cursor: pointer;
+    }
+    #menu1-open svg {
+      height: 1.3rem;
+      width: 1.3rem;
+      vertical-align: text-bottom;
+      margin-left: 5px;
+    }
   </style>
   <link rel="stylesheet" type="text/css" href="/static/css/core.css" media="screen"><!-- Layout -->
-  <link rel="stylesheet" type="text/css" href="/static/css/layout.css" media="screen"><!-- Layout -->
-  <link rel="stylesheet" type="text/css" href="/static/css/layout-theme.css" media="screen"><!-- Layout Theme -->
-  <link rel="stylesheet" type="text/css" href="/static/css/theme.css" media="screen"><!-- Controls Theme -->
-
   <link rel="stylesheet" type="text/css" href="/static/css/panel.css" media="screen"><!-- Utilities (tooltips) Styles -->
   <link rel="stylesheet" type="text/css" href="/static/css/button.css" media="screen"><!-- Buttons styles -->
   <link rel="stylesheet" type="text/css" href="/static/css/input.css" media="screen"><!-- Input styles -->
@@ -32,238 +54,306 @@
   <link rel="stylesheet" type="text/css" href="/static/css/grid.css" media="screen"><!-- Grid styles -->
   <link rel="stylesheet" type="text/css" href="/static/css/calendar.css" media="screen"><!-- Calendar styles -->
   <link rel="stylesheet" type="text/css" href="/static/css/menu.css" media="screen"><!-- Calendar styles -->
+  <link rel="stylesheet" type="text/css" href="/static/css/theme.css" media="screen"><!-- Controls Theme -->
   
-  <script type="text/javascript" src="/static/lib/jquery-2.1.1.js"></script><!-- Only used for ajax -->
+  <!-- External dependency -->
   <script src="/static/lib/lodash-3.8.0.js"></script><!-- External dependency -->
+   
+  * <!-- Automatically loads all js files -->
   <!-- scripts -->
+  
+  <!-- Some data -->
+  <script src="/static/data/countries.js"></script>
+  <script src="/static/data/colors.js"></script>
+  <script src="/static/data/cities.js"></script>
 </head>
 <body>
-  <div id="header">
-    <h1>Helium <small>unified layout and controls</small></h1>
-  </div>
+  <div id="container">
+    <header style="height: 80px">
+      <h1>Helium Fusion Compound</h1>
+    </header>
+    
+    <h2>Buttons</h2>
+    <div class="row">
+      <div class="col-2">
+        <label id="button1-l">A simple button</label>
+        <button id="button1">&nbsp;Download!</button>
+      </div>
+      <div class="col-2">
+        <button id="button2">&nbsp;Enable it!</button>
+      </div>
+      <div class="col-2">
+        <label id="button3-l">Label!</label>
+        <button id="button3">Error me!</button>
+      </div>
+    </div>
+    
+    <pre><code class="javascript"></code></pre>
+    <script>
+      var button1 = he('button', 'button1', { label: 'button1-l', icon: 'cloud-download', disabled: true });
+      var button2 = he('button', 'button2', { icon: 'chevron-left' }).on('click', function(){
+        button1.option('disabled') 
+          ? (button1.enable(), this.option('text', 'Disable it!')) 
+          : (button1.disable(), this.option('text', 'Enable it!'));
+      });
+      var button3 = he('button', 'button3', { 
+        label: 'button3-l', 
+        icon: 'check', 
+        iconpos: "after",
+        tooltip: { content: "Tips from the tool!", position: "after" }
+      }).on('click', function(){
+        this.option('error') ? this.option('error', null) : this.option('error', "An error happened");
+      });
+    </script>
+    
+    <h2>Inputs</h2>
+    <div class="row">
+      <div class="col-2">
+        <label id="input1-l">Clickable input icon</label>
+        <input id="input1">
+      </div>
+      <div class="col-2">
+        <label id="input2-l">A number input - no negatives</label>
+        <input id="input2">
+      </div>
+      <div class="col-2">
+        <label id="input3-l">A date input - no weekends</label>
+        <input id="input3">
+      </div>
+    </div>
 
-  <div id="main">
-    <div style="width: calc(100% - 50px); margin-left: 25px;">      
-      <h2>Some cool buttons</h2>
-      <div class="row">
-        <div class="col-1">
-          <label>A label</label>
-          <button type="button" id="button-1">A button</button>
-        </div>
-        <div class="col-1">
-          <label>Long text label that is cutoff</label>
-          <button type="button" id="button-2">Long text button that is cutoff</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-3">Unlabeled Btn</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-4">Icooons!</button>
-        </div>
-        <div class="col-1">
-          <label>Disabled Buttons</label>
-          <button type="button" id="button-5">Unlabeled Btn</button>
-        </div>
-        <div class="col-1">
-          <label>Colored</label>
-          <button type="button" id="button-6" class="he-blue">Blue Button</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-7" class="he-green">Green Btn</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-8" class="he-yellow">Yellow Btn</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-9" class="he-red">Red Btn</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-modal-1" class="he-red">Opens a modal</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-modal-2" class="he-red">Opens a modal</button>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-1">
-          <button type="button" id="checkbox-1">A Checkbox</button>
-        </div>
-        <div class="col-2">
-          <label>Multiple Checkboxes with a common label</label>
-          <button type="button" id="checkbox-2">Option 1</button>
-          <button type="button" id="checkbox-3">Option 2</button>
-          <button type="button" id="checkbox-4">Option 3</button>
-        </div>
-        <div class="col-2">
-          <button type="button" id="radio-1">Radio 1</button>
-          <button type="button" id="radio-2">Radio 2</button>
-          <button type="button" id="radio-3">Radio 3</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-10" class="he-green">Green Disabled</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-11" class="he-yellow">Yellow Disabled</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-12" class="he-red">Red Disabled</button>
-        </div>
-        <div class="col-1">
-          <button type="button" id="button-13" class="he-blue">Blue Disabled</button>
-        </div>
-      </div>
-      
-      <h2>Some cool inputs</h2>
-      <div class="row">
-        <div class="col-1">
-          <button id="button-14"></button>
-        </div>
-        <div class="col-2">
-          <label id="input-1-label">A Standard input</label>
-          <input id="input-1">
-        </div>
-        <div class="col-1">
-          <label id="input-2-label">A Disabled input</label>
-          <input id="input-2" value="Some value">
-        </div>
-        <div class="col-2">
-          <label id="input-3-label">An errored input</label>
-          <input id="input-3">
-        </div>
-        <div class="col-1">
-          <input id="input-4" value="Mousover tooltip">
-        </div>
-        <div class="col-1">
-          <label id="input-5-label">Numbers</label>
-          <input id="input-5">
-        </div>
-        <div class="col-1">
-          <label id="input-6-label">Dates</label>
-          <input id="input-6">
-        </div>
-        <div class="col-1">
-          <label id="input-7-label">Input with an icon</label>
-          <input id="input-7">
-        </div>
-        <div class="col-1">
-          <input id="input-8">
-        </div>
-      </div>
-      
-      <h2>Lists. Lists are everything</h2>
-      <div class="row">
-        <div class="col-2">
-          <label id="list-4-label">Scroll List</label>
-          <div id="list-4" style="height:100px"></div>
-        </div>
-        <div class="col-1">
-          <label id="list-1-label">Buton List</label>
-          <div id="list-1"></div>
-        </div>
-        <div class="col-1">
-          <div id="list-2"></div>
-        </div>
-        <div class="col-2">
-          <label id="list-1-label">Custom rendered button list</label>
-          <div class="row">
-            <style>
-              #list-7-1 > *, #list-7-2 > * { display: block; }
-            </style>
-            <div id="list-7-1" class="col-6"></div>
-            <div id="list-7-2" class="col-6"></div>
-          </div>
-        </div>
-        <div class="col-1">
-          <label id="list-3-label">Dropdown List</label>
-          <button type="button" id="list-3"></button>
-        </div>
-        <div class="col-1">
-          <label id="list-6-label">Dropdown List 2</label>
-          <button type="button" id="list-6"></button>
-        </div>
-        <div class="col-2">
-          <label id="list-5-label">Autocomplete List</label>
-          <input id="list-5">
-        </div>
-        <div class="col-2">
-          <label id="list-8-label">Autocomplete Ajax List</label>
-          <input id="list-8">
-        </div>
-      </div>
-      
-      <h2>All the power of the grid!</h2>
-      <div class="row">
-        <div id="col-6">
-          <label id="grid-1-label">Grids have labels too. Why not?</label>
-          <div id="grid-1" style="height:400px; border: solid 1px #ccc" tabindex=""></div>
-          <div id="grid-1-pagination" style="margin: 10px 0; text-align: center">
-            <!--Pagination goes here -->
-          </div>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
-  <div id="footer">
-    <p>This is a footer &reg; with some accented colors</p>
-  </div>
-  
-  <div id="modal-1" class="he-modal" style="max-width: 50%">
-    <h2>Modal 1</h2>
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-    </p>
-    <p style="text-align:right">
-      <button id="modal-1-close">Close</button>
-    </p>
-  </div>
-  
-  <div id="modal-2" class="he-modal" style="max-width: 50%">
-    <h2>Modal 2 - with controls</h2>
-    <div class="row">
-      <div class="col-4">
-        <label>Autocomplete</label>
-        <input id="modal-autocomplete">
-      </div>
-      <div class="col-4">
-        <label>Datepicker</label>
-        <input id="modal-datepicker">
-      </div>
-      <div class="col-4">
-        <label>Dropdown Else</label>
-        <button id="modal-dropdown">Select</button>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-3 off-9">
-        <button id="modal-2-close">Close</button>
-      </div>
-    </div>
-  </div>
+    <pre><code class="javascript"></code></pre>
+    <script>
+      var input1 = he('input', 'input1', { label: 'input1-l', icon: 'check', iconpos: 'after', click: true }).on('click', function(){
+        alert('The input has value: ' + this.val());
+      });
 
-  <div id="modal-3" class="he-modal" style="width: 400px">
-    <h4>Pick Colors</h4>
+      var input2 = he('number', 'input2', { 
+        label: 'input2-l', 
+        format: 5, 
+        negative: true,
+        value: 13.3333333333
+      }).on('type', function(){
+        this.option('error', this.val() < 0 ? "Value must be bigger than 0" : null);
+      });
+
+      var input3 = he('date', 'input3', { 
+        label: 'input3-l', 
+        format: 'US', 
+        value: new Date(1789, 6, 14),
+        datepicker: {
+          onRenderDate: function(date){
+            return date.getDay() % 6 ? "" : "weekend";
+          }
+        }
+      }).on('change', function(){
+        if(this.val() && this.val().getDay() % 6 === 0){
+          this.option('error', "We don't do weekends");
+        }
+        else {
+          this.option('error', null);
+        }
+      });
+    </script>
+    
+    <h2>Lists</h2>
     <div class="row">
-      <div class="col-6">
-        <label>Available</label>
-        <div id="grid-list-1" style="height:200px"></div>
+      <div class="col-2">
+        <label id="list1-l">Scroll List</label>
+        <div id="list1" style="height:200px"></div>
       </div>
-      <div class="col-6">
-        <label>Selected</label>
-        <div id="grid-list-2" style="height:200px"></div>
+      <div class="col-2">
+        <label id="list2-l">Dropdown List</label>
+        <button id="list2"></button>
+      </div>
+      <div class="col-2">
+        <label id="list3-l">Autocomplete list</label>
+        <input id="list3" placeholder="Start typing...">
       </div>
     </div>
     <div class="row">
-      <div class="col-4 off-8">
-        <button id="grid-ok">OK</button>
+      <div class="col-2">
+        <label id="list4-l">Checkbox List</label>
+        <div id="list4"></div>
+      </div>
+      <div class="col-2">
+        <label id="list5-l">Radio List</label>
+        <div id="list5"></div>
+      </div>
+      <div class="col-2">
+        <label id="list6-l" class="clearfix">Custom-rendered button list</label>
+        <div class="row">
+          <div id="list6-1" class="col-6"></div>
+          <div id="list6-2" class="col-6"></div>
+        </div>
       </div>
     </div>
+    
+    <pre><code class="javascript"></code></pre>
+    <script>
+      // A scroll list with a custom item renderer. 
+      var list1 = he('scrollList', 'list1', { 
+        items: COLORS, 
+        template: function(item, index){
+          return "\<div class='color-square' style='background-color:" + item.v + "'>\</div>" + item.t;
+        }
+      });
+
+      // A dropdown list with optgroups
+      var list2 = he('dropdownList', 'list2', { 
+        items: CITIES, 
+        placeholder: "Select City" 
+      });
+      
+      // An autocomplete list with a large item set
+      var list3 = he('autocompleteList', 'list3', { 
+        items: COUNTRIES 
+      });
+      
+      // A very small item set
+      var buttonItems = [{ t: "One", v: 1 },{ t: "Two", v: 2 },{ t: "Three", v: 3 }];
+      
+      // ButtonLists for very small item sets
+      var list4 = he('buttonList', 'list4', { type: 'checkbox', items: buttonItems, value: [1,2] });
+      var list5 = he('buttonList', 'list5', { type: 'radio', items: buttonItems, value: 3 });
+
+      // Rendering a button list in different DOM elements
+      // by overriding the render() method
+      var list6El1 = document.getElementById('list6-1');
+      var list6El2 = document.getElementById('list6-2');
+      var list6 = he('buttonList', list6El1.parentElement, {
+        type: 'checkbox',
+        items: buttonItems,
+        disabled: true
+      });
+      list6.render = function(){
+        _.each(this.buttons, function(button){
+          he.unregister(button);
+          button.el.parentElement && button.el.parentElement.removeChild(button.el);
+        });
+        var f1 = document.createDocumentFragment();
+        var f2 = document.createDocumentFragment();
+        var button, i = 0;
+        while(button = this.nextButton()){
+          (++i % 2 ? f1 : f2).appendChild(button.el);
+        }
+        list6El1.innerHTML = list6El2.innerHTML = "";
+        list6El1.appendChild(f1);
+        list6El2.appendChild(f2);
+      }
+      list6.render();
+    </script>
+    
+    <h2>Panels</h2>
+    <div class="row">
+      <div class="col-2">
+        <label>Modal</label>
+        <button id="modal1-open">Open modal</button>
+      </div>
+    </div>
+    
+    <!-- This is the modal window. It will be hidden -->
+    <div id="modal1" class="he-modal" style="width:400px">
+      <div class="row">
+        <div class="col-12">
+          <h3>Modal and a pop-up menu</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <label>Name</label>
+          <input id="modal1-name">
+        </div>
+        <div class="col-6">
+          <label>Birthday</label>
+          <input id="modal1-date">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <div id="menu1-open" class="he" style="line-height:2rem">Presets <script>document.write(he.util.iconHTML('chevron-down'))</script></div>
+        </div>
+        <div class="col-4 off-5">
+          <button id="modal1-close">Ok</button>
+        </div>
+      </div>
+    </div>
+    
+    
+    <pre><code class="javascript"></code></pre>
+    <script>
+      // The modal control
+      var modal1 = he('modal', 'modal1', { closeAnywhere: false, focusOnFirst: true });
+
+      // The button that opens it
+      var modal1Open = he('button', 'modal1-open').on('click', function(){
+        modal1.open();
+      });
+      
+      // The button that closes it
+      var modal1Close = he('button', 'modal1-close', { disabled: true }).on('click', function(){
+        modal1.close();
+      });
+      
+      // Emulates model functionality
+      function validate(){
+        modal1Name.val() && modal1Date.val() ? modal1Close.enable() : modal1Close.disable();
+      }
+      
+      var modal1Name = he('input', 'modal1-name').on('change', validate);
+      var modal1Date = he('date', 'modal1-date', { format: 'US', datepicker: true }).on('change', validate);
+      
+      // The menu control
+      var menu1 = he('menu', {
+        anchor: document.getElementById('menu1-open'),
+        parent: document.body,
+        event: 'mouseover',
+        position: 'vertical',
+        menu: [{ 
+          title: "Musicians",
+          menu: [{
+            title: "Madonna",
+            name: "Madonna Louise Ciccone",
+            birthday: new Date(1928, 7, 16)
+          },{
+            title: "Beatles Guy",
+            name: "John Winston Ono Lennon",
+            birthday: new Date(1940, 9, 9)
+          }]
+        },{
+          title: "Actors",
+          menu: [{
+            title: "Han Solo",
+            name: "Harrison Ford",
+            birthday: new Date(1942, 6, 13)
+          },{
+            title: "Gandalf",
+            name: "Ian McKellen",
+            birthday: new Date(1939, 4, 25)
+          }]
+        }]
+      });
+      
+      // The menu click handler
+      menu1.on('click', function(options){
+        if(options.item && options.item.birthday){
+          modal1Name.val(options.item.name);
+          modal1Date.val(options.item.birthday);
+          menu1.close();
+        }
+      });
+    </script>
+    
+    <h2>Grid</h2>
+    <div class="row">
+      <div class="col-12">
+        <label>The grid has a label, why not</label>
+      </div>
+    </div>
+    <pre><code class="javascript"></code></pre>
+    <script>
+    // Grid init code goes here
+    </script>
   </div>
-  
-  <script src="/static/dev/index.js"></script>
 </body>
 </html>

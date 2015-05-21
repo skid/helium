@@ -16,13 +16,13 @@
 
       // These handlers are attached either to the label
       // or to the element itself.
-      self.$tooltipHandlerOn = function(e){
-        self.$tooltipEl.show(); 
+      this.$tooltipHandlerOn = function(e){
+        // Don't show the tooltip if we have an error tooltip
+        self.$options.error || self.$tooltipEl.show(); 
       }
-      self.$tooltipHandlerOff = function(e){ 
+      this.$tooltipHandlerOff = function(e){ 
         self.$tooltipEl.hide(); 
       }
-
       this.$tooltip();
     },
     

@@ -20,6 +20,8 @@ var server      = connect();
 
 // Serve 3rd party libraries
 server.use('/static/lib', serveStatic(path.normalize(__dirname + '/lib')));
+// Serve data
+server.use('/static/data', serveStatic(path.normalize(__dirname + '/data')));
 // Serve development scripts
 server.use('/static/dev/', serveStatic(__dirname));
 // Serve static files
@@ -35,10 +37,9 @@ server.use(function(req, res, next){
   next();
 });
 
-// Preload some data
-var COUNTRIES = JSON.parse(fs.readFileSync("data/countries.json"));
 var ORDER = JSON.parse(fs.readFileSync("../src/order.json"));
 
+// Some silly data
 var DATA = [
   { name: "Black Shoes",       date: "2010-11-12", cost: 1199.00,        color: ["#000"], country: null, city: null, isEpic: true },
   { name: "Red Socks",         date: "2003-01-03", cost: 59.99,          color: ["#f00"], country: null, city: null, isEpic: true },
@@ -95,146 +96,6 @@ var DATA = [
   { name: "Yellow Linens",     date: "2013-01-14", cost: 499.00,         color: ["#00f"], country: null, city: null, isEpic: true },
   { name: "Dark Iron",         date: "2013-11-14", cost: 749.95,         color: ["#ff0"], country: null, city: null, isEpic: true },
 ];
-
-var COLORS = [
-  { label: "Bright colors" },
-	{ label: "Red",            value: "#f00" },
-	{ label: "Cyan",           value: "#0ff" },
-	{ label: "Magenta",        value: "#f0f" },
-	{ label: "Yellow",         value: "#ff0" },
-  { label: "Pink",           value: "#ff9" },
-  { label: "Orange",         value: "#fc3" },
-  { label: "Peach",          value: "#f94" },
-  { label: "Dark Colors" },
-	{ label: "Green",          value: "#0f0" },
-	{ label: "Blue",           value: "#00f" },
-	{ label: "Black",          value: "#000" },
-  { label: "Brown",          value: "#651" },
-  { label: "Purple",         value: "#606" },
-  { label: "Other" },
-  { label: "Red and Yellow", value: "MK" },
-];
-
-var CITIES = [
-  { label: "WildcardBurg", value: "*",           group: "Any" },
-  { label: "Netherlands" },
-	{ label: "Amsterdam",    value: "amsterdam",   group: "NL" },
-	{ label: "Utrecht",      value: "utrecht",     group: "NL" },
-	{ label: "Maastricht",   value: "maastricht",  group: "NL" },
-  { label: "Belium" },
-	{ label: "Bruxelles",    value: "bruxelles",   group: "BE" },
-	{ label: "Bruges",       value: "bruges",      group: "BE" },
-	{ label: "Antwerpen",    value: "antwerpen",   group: "BE" },
-  { label: "France" },
-	{ label: "Paris",        value: "paris",       group: "FR" },
-  { label: "Lyon",         value: "lyon",        group: "FR" },
-  { label: "Strasbourg",   value: "strasbourg",  group: "FR" },
-  { label: "Nice",         value: "nice",        group: "FR" },
-  { label: "Cannes",       value: "cannes",      group: "FR" },
-  { label: "Marseilles",   value: "marseilles",  group: "FR" },
-  { label: "Germany" },
-  { label: "Aachen",       value: "aachen",      group: "DE" },
-	{ label: "Frankfurt",    value: "frankfurt",   group: "DE" },
-	{ label: "Berlin",       value: "berlin",      group: "DE" },
-	{ label: "Munchen",      value: "munchen",     group: "DE" },
-	{ label: "Mainz",        value: "mainz",       group: "DE" },
-	{ label: "Köln",         value: "köln",        group: "DE" },
-	{ label: "Düsseldorf",   value: "düsseldorf",  group: "DE" },
-  { label: "United Kingdom" },
-	{ label: "London",       value: "london",      group: "UK" },
-  { label: "Manchester",   value: "manchester",  group: "UK" },
-  { label: "Brighton",     value: "brighton",    group: "UK" },
-  { label: "Birmingham",   value: "birmingham",  group: "UK" },
-  { label: "Australia" },
-  { label: "Pert",         value: "pert",        group: "AU" },
-  { label: "Sydney",       value: "sydney",      group: "AU" },
-  { label: "Canberra",     value: "canberra",    group: "AU" },
-  { label: "Japan" },
-	{ label: "Kyoto",        value: "kyoto",       group: "JP" },
-	{ label: "Osaka",        value: "osaka",       group: "JP" },
-	{ label: "Tokyo",        value: "tokyo",       group: "JP" },
-	{ label: "Sapporo",      value: "sapporo",     group: "JP" },
-	{ label: "Satsuma",      value: "satsuma",     group: "JP" },
-  { label: "Russia" },
-	{ label: "Москва",       value: "moscow",      group: "RU" },
-	{ label: "Владивосток",  value: "vladivostok", group: "RU" },
-  { label: "Одеса",        value: "odessa",      group: "RU" },
-  { label: "Сочи",         value: "sochi",       group: "RU" },
-  { label: "Волгоград",    value: "volgograd",   group: "RU" },
-  { label: "Macedonia" },
-  { label: "Скопје",       value: "skopje",      group: "MK" },
-  { label: "Битола",       value: "bitola",      group: "MK" },
-  { label: "Тетово",       value: "tetovo",      group: "MK" }
-]
-
-server.use('/data/countries-filter', function(req, res, next){
-  var text = req.query.data.text.toLowerCase();
-  setTimeout(function(){
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.end(JSON.stringify(COUNTRIES.filter(function(country){
-      return country.label.toLowerCase().indexOf(text) > -1;
-    })));
-  }, 500);
-});
-
-server.use('/data/countries', function(req, res, next){
-  res.writeHead(200, {'Content-Type': 'application/json'});
-  res.end(fs.readFileSync("data/countries.json"));
-});
-
-server.use('/data/cities', function(req, res, next){
-  res.writeHead(200);
-  res.end(JSON.stringify(CITIES));  
-});
-
-server.use('/data/colors', function(req, res, next){
-  res.writeHead(200);
-  res.end(JSON.stringify(COLORS));  
-});
-
-/**
- * Query arguments:
-    c - sort column
-    d - sort direction
-    p - page number
-    s - page size
-    f_* - filter column
-**/
-server.use('/data/grid', function(req, res, next){
-  var query = req.query, page = query.p || 1, size = query.s || DATA.length - 1;
-  var filters = {}, dataset;
-  
-  for(var i in query) {
-    if(i.indexOf('f_') === 0) {
-      filters[ i.substr(2) ] = query[i];
-    }
-  }
-
-  dataset = DATA.slice();
-  dataset = dataset.filter(function(item){
-    for(var name in filters) {
-      if(name in item) {
-        return ("" + item[name]).toLowerCase().indexOf(filters[name].toLowerCase()) > -1;
-      }
-    }
-    return true;
-  });
-  
-  if(query.c && query.d) {
-    dataset.sort(function(a, b){
-      return (query.d === 'asc' ? 1 : -1) * (a[query.c] > b[query.c] ? 1 : a[query.c] < b[query.c] ? -1 : 0);
-    });
-  }
-
-  res.writeHead(200, { 'X-Item-Count': dataset.length });
-  res.end(JSON.stringify( dataset.slice((page - 1) * size, page * size)));
-});
-
-server.use('/test', function(req, res, next){
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  fs.createReadStream("test.html").pipe(res);
-});
-
 
 server.use("/", function(req, res, next){
   var data = fs.readFileSync("index.html", 'UTF-8');

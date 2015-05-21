@@ -26,7 +26,7 @@
       anchor:     this.button.el,
       horizontal: 'left',
       vertical:   'below',
-      vauto:      'max'
+      vauto:      'max',
     })
     
     this.list.el.classList.add('he-box');
@@ -153,6 +153,7 @@
       if(modal = findUp(this.el, 'class', 'he-modal')){
         this.box.setOptions({ parent: document.documentElement });
       }
+      this.box.el.style.minWidth = this.el.offsetWidth + "px";
       if(this.box.show()){ 
         this.list.$focused && this.list.$scrollTo(this.list.$focused);
       }

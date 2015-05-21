@@ -157,8 +157,8 @@
 
       // Format the whole part with thousand separators
       var highOrder = whole.length % 3;
-      for(i=0; i<whole.length; ++i){
-        if(i && ((i - highOrder) % 3 == 0) ){
+      for(var i=0; i<whole.length; ++i){
+        if(i && (i - highOrder) % 3 === 0 && newValue !== "-"){
           newValue += this._comma;
           if(i < start + 1) {
             caretOffset += 1;

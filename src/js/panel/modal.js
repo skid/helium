@@ -55,7 +55,8 @@
         prev ? he.util.overlay.hide() : he.util.overlay.show();
       },
       closeAnywhere: function(){},
-      closeIcon: function(ctrl, prev){ ctrl.$setIcon(); }
+      closeIcon: function(ctrl, prev){ ctrl.$setIcon(); },
+      focusOnFirst: function(){}
     },
     
     $position: function(){
@@ -157,7 +158,7 @@
         self.isOpen = true;
         cssClass(self.el, 'he-modal-shown');
         self.$icon && cssClass(self.$icon, 'he-shown');
-        self.$captureTab();
+        self.$captureTab(self.$options.focusOnFirst);
         self.trigger.apply(self, args);
       });
       return true;

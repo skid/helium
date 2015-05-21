@@ -27,7 +27,7 @@
   }
   
   var proto = he.abstract.list.prototype;
-  ButtonList.prototype = he.util.inherits(proto, he.mixins.disableable, he.mixins.errored, he.mixins.labeled, he.mixins.tooltip, {
+  ButtonList.prototype = he.util.inherits(proto, he.mixins.disableable, he.mixins.errored, he.mixins.tooltip, he.mixins.labeled, {
     $defaults: _.defaults({
       type: 'checkbox',
       onIcon: 'check-box',
@@ -65,10 +65,6 @@
     
     $init: function(){
       this.render();
-      var disabled = this.$options.disabled;
-      _.each(this.buttons, function(btn){
-        btn[ disabled ? 'disable' : 'enable' ]();
-      });
     },
     
     // Alternative render method
@@ -77,7 +73,7 @@
       var items = this.$items;
       var index = this.$nextIndex;
       var item = items[index];
-      
+
       if(item === undefined){
         this.$nextIndex = 0;
         return null;
@@ -102,7 +98,8 @@
         text: tget(item),
         value: index in selection,
         onIcon: this.$options.onIcon,
-        offIcon: this.$options.offIcon
+        offIcon: this.$options.offIcon,
+        disabled: this.$options.disabled
       });
       btn.on('change', function(){
         self.set(index, { index: true, op: this.$value ? "add" : "remove" });
@@ -118,7 +115,6 @@
         he.unregister(button);
         button.el.parentElement && button.el.parentElement.removeChild(button.el);
       });
-      
       var button; 
       var fragment = document.createDocumentFragment();
       while(button = this.nextButton()){

@@ -11,7 +11,7 @@
 
     this.box = new he.util.box({ 
       anchor: options.anchor, 
-      parent: options.parent || (he.msie ? doc.body : doc.documentElement), 
+      parent: options.parent || document.body, 
       cssClass: 'he-menu',
       hauto: "opposite",
       vauto: "max"
@@ -52,10 +52,12 @@
       this.$parent && this.$parent.trigger('submenu:willclose', this);
     });
     
-    this.on('he:click', function(e){
+    this.on('he:click', function(e, options){
       var item = he.util.findUp(e.target, 'class', 'he-menu-item');
       if(item){
-        this.trigger('click', { item: this.$options.menu[item.getAttribute('he-item-index')] });
+        options = options || { item: this.$options.menu[item.getAttribute('he-item-index')], menu: this };
+        this.trigger('click', options);
+        this.$parent && this.$parent.trigger('he:click', e, options);
       }
     });
     

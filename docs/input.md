@@ -231,10 +231,13 @@ var cal = he('date', document.getElementById('my-date-input'), {
 ### [Inherits]
 - input.input
  
-### [Properties]
+#### [Methods]
 
-#### calendar
-The date input can have a calendar sub-control if configured. The calendar sub-control will have its value synced with the date input's value and is used as a pop-up datepicker. The calendar will create its own DIV to use as an element, so there is no additional setup required.
+#### `open()`
+If the datepicker is configured, opens the datepicker panel.
+
+#### `close()`
+If the datepicker is configured, closes the datepicker panel.
 
 ### [Options] 
 

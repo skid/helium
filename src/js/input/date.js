@@ -47,12 +47,12 @@
     });
     
     this.on('he:focus', function(){
-      this.$open();
+      this.open();
     });
     
     this.on('he:blur', function(){
       this.$prevalue = this.el.value = this.$format(this.$value);
-      this.$close();
+      this.close();
     });
     
     this.on('he:change', function(options){
@@ -122,14 +122,14 @@
       }
     },
     
-    $open: function(){
+    open: function(){
       if(this.$panel){
         this.$calendar.val(this.val());
         this.$panel.show(); 
       }
     },
     
-    $close: function(){
+    close: function(){
       this.$panel && this.$panel.hide();
     },
     

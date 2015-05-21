@@ -3,42 +3,28 @@
 .clearfix:after { clear: both; }
 .clearfix { *zoom: 1; }
 
+/** CSS Mini Reset **/
 html {
--webkit-text-size-adjust:100%;
--ms-text-size-adjust:100%;
-box-sizing:border-box;
-font-size:1rem;
+  -webkit-text-size-adjust:100%;
+  -ms-text-size-adjust:100%;
+  box-sizing:border-box;
+  font-size:1rem;
   text-rendering: optimizeLegibility;
 }
-
-/** CSS Mini Reset **/
-html, body, div, form, fieldset, legend, label {
- margin: 0;
- padding: 0; 
-}
-table {
- border-collapse: collapse;
- border-spacing: 0;
-}
-th, td {
- text-align: left;
- vertical-align: top;
-}
-
-h1, h2, h3, h4, h5, h6, th, td, caption, p { 
-  font-weight: inherit; 
-  margin: 0;
-  margin-bottom: 10px;
-  padding: 0;
-}
-
+html, body, div, form, fieldset, legend, label { margin: 0; padding: 0; }
+table { border-collapse: collapse; border-spacing: 0; }
+th, td { text-align: left; vertical-align: top; }
+h1, h2, h3, h4, h5, h6, th, td, caption, p { font-weight: inherit; margin: 0; margin-bottom: 10px; padding: 0; }
 img { border: 0; }
+
+/** Common elements **/
+#container {
+  margin: 20px;
+}
 
 /**   
  * Mini grid system.
- * Based on a 12 column grid. 
- * Gutter width is 15px. 
- * Row margins are 10px.
+ * Based on a 12 column grid. Gutter width is 15px. Row margins are 10px.
 **/
 .row:before, .row:after { content: " "; display: table; }
 .row:after { clear: both; }
@@ -65,7 +51,8 @@ img { border: 0; }
 [class*='col-'] > input:not([type='checkbox']):not([type='radio']),
 [class*='col-'] > button:not(.he-checkbox):not(.he-radio),
 [class*='col-'] > select, [class*='col-'] textarea,
-[class*='col-'] > .he-grid {
+[class*='col-'] > .he-grid,
+[class*='col-'] > .he {
   width: 100%;
   margin-top: 1.4rem;
 }
@@ -74,8 +61,14 @@ img { border: 0; }
 [class*='col-'] label + input:not([type='checkbox']):not([type='radio']),
 [class*='col-'] label + button:not(.he-checkbox):not(.he-radio),
 [class*='col-'] label + select, [class*='col-'] label + textarea,
+[class*='col-'] label + .he-scroll-list,
 [class*='col-'] label + .he-grid { 
   margin-top: 0.3rem;
+}
+
+/* Columns with .dummylabel have top padding */
+[class*='col-'].dummylabel {
+  padding-top: 1.7rem;
 }
 
 [class*='col-'] button.he-checkbox, [class*='col-'] button.he-radio {

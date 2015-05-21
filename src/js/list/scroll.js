@@ -81,7 +81,7 @@
   }
 
   var proto = he.abstract.list.prototype;
-  ScrollList.prototype = he.util.inherits(proto, he.mixins.disableable, he.mixins.errored, he.mixins.labeled, he.mixins.tooltip, {
+  ScrollList.prototype = he.util.inherits(proto, he.mixins.disableable, he.mixins.errored, he.mixins.tooltip, he.mixins.labeled, {
     $defaults: _.defaults({
       selectedIcon: 'check',
       multiple: false,

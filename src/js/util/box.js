@@ -318,7 +318,7 @@
         return false;
       }
       // Add the box to the DOM so we can do calculations with it
-      var parent = this.options.parent || getParent();
+      var parent = this.options.parent || document.body;
       parent.appendChild(this.el);
       
       // Show the box, removed any position:fixed classes
@@ -336,13 +336,12 @@
         return false;
       }
       cssClass(this.el, null, 'he-shown');
-      var parent = this.options.parent || getParent();
+      var parent = this.options.parent || document.body;
       parent.contains(this.el) && parent.removeChild(this.el);
       this.isShown = false;
       return true;
     }
   }
-
   
   // A popover is, simply put, a replacement for a tooltip.
   // It creates a box that has a small arrow pointing 

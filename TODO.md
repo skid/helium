@@ -78,7 +78,7 @@ In chrome (possibly others), the number inputs make the page scroll to the top w
 - Make an option to set min-width to the grid. Shrinking one column should enlarge another
 - Column reordering
 - Row reordering
-- Grouping Rows (that span all columns and can optionally expand some data)
+- Grouping Rows (that span all columns and can expand into more rows)
 - Grouping Columns (rowspan) based on the identicity of data
 
 #### Modal

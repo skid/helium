@@ -50,8 +50,8 @@ label.he-error {
 }
 label svg { /* Error and info icons */
   display: inline-block;
-  height: 1.3em;
-  width: 1.3em;
+  height: 1.1em;
+  width: 1.1em;
   margin: 0;
   vertical-align: text-bottom;
 
@@ -172,6 +172,11 @@ label svg { /* Error and info icons */
 .he-input.he-error, .he-input.he-error:focus {
   color: #D32F2F;
   border-color: #D32F2F;
+}
+.he-button.he-error {
+  color: #D32F2F;
+  border-color: #D32F2F;
+  fill: #D32F2F;
 }
 
 /* Lists */

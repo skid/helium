@@ -22,7 +22,7 @@
       
       if(disabled) {
         cssClass(this.el, 'he-disabled');
-        this.el.setAttribute('tabindex', '-1');
+        this.el.hasAttribute('tabindex') && this.el.setAttribute('tabindex', '-1');
         label && cssClass(label, 'he-disabled');
         if(typeof disabled === "string" || _.isArray(disabled)){
           cssClass(this.el, disabled);

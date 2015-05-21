@@ -90,7 +90,7 @@
     });
   };
 
-  Input.prototype = he.util.inherits(he.abstract.control.prototype, he.mixins.disableable, he.mixins.errored, he.mixins.labeled, he.mixins.tooltip, {
+  Input.prototype = he.util.inherits(he.abstract.control.prototype, he.mixins.disableable, he.mixins.errored, he.mixins.tooltip, he.mixins.labeled, {
     $defaults: {
       disabled: false,
       icon: null,
