@@ -57,6 +57,9 @@
     return control;
   };
   
+  // Even in 2015, internet explorer is so god-awful that I need custom code
+  he.msie = navigator.userAgent.indexOf("Trident") > -1;
+  
   // Helium main configuration
   he.config = {
     thousandsSeparator: ',',

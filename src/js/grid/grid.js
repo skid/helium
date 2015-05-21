@@ -574,7 +574,6 @@
       if(submenus.length === 0){
         return null;
       }
-
       var menu = he('menu', {
         anchor: anchor,
         parent: this.el.offsetParent,

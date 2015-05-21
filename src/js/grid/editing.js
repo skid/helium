@@ -11,13 +11,6 @@
  * definition:  
 **/
 ;(function(){
-  /**  
-   * Helium (he) grid editing.
-   *  
-   * @module mixins
-   * @submodule mixins.gridEdit
-  **/
-
   // A list of keys that have some special effect on edit controls
   var km = he.keymap;
   var editKeys = [km.DOWN, km.UP, km.LEFT, km.RIGHT, km.TAB, km.ESCAPE, km.ENTER];
@@ -37,77 +30,18 @@
   var EDIT_INITIATOR = null;
   var EDIT_START_TIMEOUT = 200;
   
-  /**  
-   * An object that manages the grid controls. 
-   * Since we're using one instance of each grid control, this 
-   * manager will grant usage of each one to different grid instances. 
-   *  
-   * @class GridEditControls 
-   * @static
-  **/
+  // An object that manages the grid controls. 
+  // Since we're using one instance of each grid control, this 
+  // manager will grant usage of each one to different grid instances. 
   var Controls = {
     $grid: null, 
-    $control: null,
+    $current: null,
     $controls: {
       text:  he('input', doc.createElement('input'), {}),
       number: he('number', doc.createElement('input'), {}),
       enum: he('scrollList', cssClass(doc.createElement('div'), 'he-box'), { items: [], nullable: true }),
       date: he('date', doc.createElement('input'), { datepicker: { hauto: "opposite", vauto: "opposite" } }),
       autocomplete: he('autocompleteList', cssClass(doc.createElement('input'), 'he-box'), { items: [], nullable: true })
-    },
-
-    // A grid uses this method to request an edit control 
-    // to be positioned in the correct place over it.
-    request: function(grid, options, cell){
-      // Use the DOM blur to avoid triggering it again when
-      // we remove the control from the DOM
-      // This will remove the control
-      this.$control && this.$control.el.blur();
-      
-      var type = options.type;
-      var control = this.$controls[type];
-      var el = control.el;
-      
-      docel.appendChild(el);
-      
-      control.option(null);
-      control.option(options);
-      
-      // Reset options, set new options and value
-      if(type === 'enum' || type === 'autocomplete'){
-        // Explicitly reset lists. The item set can't be controled 
-        // as an option.
-        control.option({ nullable: true, vget: options.vget, tget:options.tget });
-        control.reset(options.items || []);
-      }
-      control.val(options.value, { silent: true });
-
-      // Prevents calendar flicker
-      if(type === 'date'){
-        control.$calendar && control.$calendar.val(control.val());
-      }
-
-      // Position the control over the cell and show it
-      var i = he.util.getPositionInfo(cell, docel);
-      var top, left, bottom, right;
-      var scrollbar = false;
-      
-      // Lists are positioned to cover the maximum vertical space
-      // This code is copied over from he-list-dropdown.js
-      control.$pbox.setOptions({ anchor: cell });
-      control.$pbox.show();
-      
-      // It's ugly, but those scrollbars cover the content of the list
-      type === 'enum' && (el.style.width = el.offsetWidth + 18 + "px");
-      
-      el.focus();
-      if(type === 'enum'){
-        control.$focusTo(_.keys(control.$selection)[0]);
-        control.$scrollTo(control.$focused);
-      }
-      
-      this.$grid = grid;
-      this.$control = control;
     }
   };
   
@@ -145,11 +79,11 @@
       // when setting them from one value to another messes up the line-height
       widget.el.style.height = "";
       widget.el.style.width = "";
-      
-      Controls.$control = null;
+
+      Controls.$current = null;
       Controls.$grid.$edited = null;
       Controls.$grid = null;
-    })
+    });
 
     // Handle blur for list-based controls
     if(type === 'enum'){
@@ -198,7 +132,6 @@
     }
   });
   
-  
   he.mixins.gridEdit = {
     $init: function(){
       this.$edited = null;
@@ -211,6 +144,9 @@
       // the users to select text without inadvertantly triggering the edit.
       this.$subscribe('mousedown');
       this.$subscribe('mouseup');
+      
+      // On mousedown, blur any currently edited inputs
+      // If nothing is being edited, initiate the edit counter
       this.on('he:mousedown', function(e){
         if(this.$edited) {
           return;
@@ -219,10 +155,12 @@
           setTimeout(function(){ EDIT_INITIATOR = null; }, EDIT_START_TIMEOUT);
         }
       });
+      
+      // Only begin editing if we're still on the same cell when mouseup occurs
+      // and the mouseup happened quickly enough
       this.on('he:mouseup', function(e){
         var cell = findUp(e.target, 'class', 'he-editable');
         if(cell && EDIT_INITIATOR && EDIT_INITIATOR === cell){
-          
           this.$editBegin(cell);
         }
       });
@@ -233,7 +171,7 @@
         if(PREVENT_SCROLL) {
           return PREVENT_SCROLL = false; // derp
         }
-        Controls.$control && Controls.$grid === this && Controls.$control.el.blur();
+        Controls.$current && Controls.$grid === this && Controls.$current.el.blur();
       });
       
       /**  
@@ -341,7 +279,7 @@
       var cstate = this.$cstate[colIndex];
       
       // Return if cell can't be edited
-      if(!evaluate(cstate.editable, row)){
+      if(!evaluate(cstate.editable, row, rowIndex)){
         return;
       }
       
@@ -386,19 +324,76 @@
         }, function(){
           self.$edited = null;
         });
+        
+        // Finally, remember the cell we're editing. This needs to come last.
+        this.$edited = {
+          rowIndex: rowIndex,
+          colIndex: colIndex,
+          prevValue: value
+        };
+        return;
       }
-      // Request a control to be created and placed over the cell
-      // This may trigger a call to $applyChange
-      else {
-        Controls.request(this, options, cell);
-      }
+
+      // Use the DOM blur to avoid triggering it again when
+      // we remove the control from the DOM
+      // This will remove the control and may trigger a call to $applyChange
+      Controls.$current && Controls.$current.el.blur();
       
-      // Finally, remember the cell we're editing. This needs to come last.
-      this.$edited = {
-        rowIndex: rowIndex,
-        colIndex: colIndex,
-        prevValue: value
-      };
+      // You might be wondering why is this entire block deferred ...
+      // It's because the retarded bastard of a browser IE 11 fires the blur event
+      // in the next event loop tick.
+      _.defer(function(){
+        var type = options.type;
+        var control = Controls.$controls[type];
+        var el = control.el;
+
+        control.option(null);
+        control.option(options);
+
+        // Reset options, set new options and value
+        if(type === 'enum' || type === 'autocomplete'){
+          // Explicitly reset lists. The item set can't be controled 
+          // as an option.
+          control.option({ nullable: true, vget: options.vget, tget: options.tget });
+          control.reset(options.items || []);
+        }
+        control.val(options.value, { silent: true });
+
+        // Prevents calendar flicker
+        if(type === 'date'){
+          control.$calendar && control.$calendar.val(control.val());
+        }
+
+        // Position the control over the cell and show it
+        var i = he.util.getPositionInfo(cell, docel);
+        var top, left, bottom, right;
+        var scrollbar = false;
+    
+        // Lists are positioned to cover the maximum vertical space
+        // This code is copied over from he-list-dropdown.js
+        control.$pbox.setOptions({ anchor: cell });
+        control.$pbox.show();
+
+        // It's ugly, but those scrollbars cover the content of the list
+        if(type === 'enum'){
+          el.style.width = el.offsetWidth + 18 + "px";
+        }
+    
+        el.focus();
+
+        if(type === 'enum'){
+          control.$focusTo(_.keys(control.$selection)[0]);
+          control.$scrollTo(control.$focused);
+        }
+    
+        Controls.$grid = self;
+        Controls.$current = control;
+        self.$edited = {
+          rowIndex: rowIndex,
+          colIndex: colIndex,
+          prevValue: value
+        };
+      });
     },
     
     /**  

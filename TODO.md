@@ -5,6 +5,9 @@
 - Finish README for docs
 - Write tutorial
 
+#### Calendar
+- Fix styles - set sizes in pixels
+
 #### Grid
 - Offer out-of-the-box data binding (the crap you got in index.js)
 
@@ -20,8 +23,6 @@ In chrome (possibly others), the number inputs make the page scroll to the top w
 
 ### IE BUGS
 
-- Grid edit controls, which are added to the DOM on request can't be focused. Instead, the caret appears on the last clicked element, even if it's not focusable. Keyboard events don't work for these controls.
-- A focusable DIV with a "tabindex" property LOSES FOCUS when a child node is clicked, which itself is not focusable. This might be connected with the previous bug. Internet explorer probably secretly allows focusing on any element. You can see this by selecting an item inside a scrollList.
 - The SVG DOM nodes do not have a classList property.
 
 ---
@@ -73,6 +74,7 @@ In chrome (possibly others), the number inputs make the page scroll to the top w
 - Make a token combo list control
 
 #### Grid
+- Make the grid cells selectable and navigable with keyboard; hitting RETURN or clicking on a selected cell should trigger editing. Rewrite the editing.js code.
 - Make an option to set min-width to the grid. Shrinking one column should enlarge another
 - Column reordering
 - Row reordering

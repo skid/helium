@@ -65,6 +65,14 @@
       if(e.button === 0){
         this.$clickSelect(e.target);
       }
+      
+      // Stupid IE11 does not focus on tabindex=0 divs when you click on their children...
+      if(he.msie && !this.$options.disabled){
+        var self = this;
+        _.defer(function(){
+          self.el.focus();
+        });
+      }
     });
 
     this.on('he:change', function(options){      

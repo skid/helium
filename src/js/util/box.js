@@ -18,6 +18,10 @@
   var cssClass = he.util.cssClass;
   var scrollTo = he.util.scrollTo;
   
+  function getParent(){
+    return he.msie ? document.body : docel;
+  }
+  
   he.util.getPositionInfo = getPositionInfo;
   function getPositionInfo(anchor, container){
     // The "viewport" is either the document element or the supplied offsetParent.
@@ -74,12 +78,8 @@
     this.isShown = false;
     this.options = {};
     
-    var anchor = options.anchor || docel;
-    var parent = options.parent || anchor.offsetParent || docel;
-
-    if(doc.body === parent) {
-      parent = docel;
-    }
+    var anchor = options.anchor;
+    var parent = options.parent;
 
     this.setOptions(_.defaults(options, {
       anchor: anchor,
@@ -112,8 +112,8 @@
     },
 
     $position: function(){
-      var anchor = this.options.anchor; 
-      var parent = this.options.parent; 
+      var anchor = this.options.anchor || (he.msie ? document.body : docel);
+      var parent = this.options.parent || getParent();
       var params = this.$parse();
       var pos = getPositionInfo(anchor, parent);
       var el = this.el;
@@ -223,7 +223,7 @@
       else if(params.vauto === "max"){
         to = 0; // No top offset on vauto:max
         if(height > pos.vHeight - 10) {
-          parent === docel && cssClass(el, 'he-fixed');
+          parent === (he.msie ? document.body : docel) && cssClass(el, 'he-fixed');
           top = 5;
           el.style.height = pos.vHeight - 10 + "px";
         }
@@ -277,11 +277,11 @@
       var oo = this.options;
 
       if('anchor' in no && oo.anchor !== no.anchor){
-        oo.anchor = no.anchor || docel;
+        oo.anchor = no.anchor;
         dirty = true;
       }
       if('parent' in no && oo.parent !== no.parent){
-        oo.parent = no.parent || docel;
+        oo.parent = no.parent;
         dirty = true;
       }
       if('vertical' in no && oo.vertical !== no.vertical){
@@ -316,9 +316,10 @@
     show: function(){
       if(this.isShown){
         return false;
-      }      
+      }
       // Add the box to the DOM so we can do calculations with it
-      this.options.parent.appendChild(this.el);
+      var parent = this.options.parent || getParent();
+      parent.appendChild(this.el);
       
       // Show the box, removed any position:fixed classes
       cssClass(this.el, 'he-shown', 'he-fixed');
@@ -335,7 +336,8 @@
         return false;
       }
       cssClass(this.el, null, 'he-shown');
-      this.options.parent.contains(this.el) && this.options.parent.removeChild(this.el);
+      var parent = this.options.parent || getParent();
+      parent.contains(this.el) && parent.removeChild(this.el);
       this.isShown = false;
       return true;
     }

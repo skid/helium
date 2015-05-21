@@ -29,14 +29,3 @@ textarea.he-input {
 .he-input.he-date {
   text-align: center;
 }
-
-/* Grid edit controls are hidden by default */
-.he-input.he-grid-control {
-  opacity: 0;
-  visibility: hidden;
-  position: absolute;
-}
-.he-input.he-grid-control.he-shown {
-  opacity: 1;
-  visibility: visible;
-}

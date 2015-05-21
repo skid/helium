@@ -150,7 +150,11 @@ If set to `true`, clicking anywhere besides the modal area will close the modal.
 
 #### closeIcon 
 Boolean. Default: `false`.   
-If set to `true`, an small "close" icon will appear at the top-right corner of the modal.
+If set to `true`, a small "close" icon will appear at the top-right corner of the modal.
+
+#### focusOnFirst
+Boolean. Default: `false`.  
+If set to `true`, the first Helium control in the modal will automatically be focused when the modal opens.
 
 ### [Events] 
 #### open  

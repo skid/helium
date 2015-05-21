@@ -230,40 +230,9 @@ server.use('/data/grid', function(req, res, next){
   res.end(JSON.stringify( dataset.slice((page - 1) * size, page * size)));
 });
 
-
-server.use('/buttons', function(req, res, next){
+server.use('/test', function(req, res, next){
   res.writeHead(200, {'Content-Type': 'text/html'});
-  fs.createReadStream("buttons.html").pipe(res);
-});
-
-
-server.use('/inputs', function(req, res, next){
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  fs.createReadStream("inputs.html").pipe(res);
-});
-
-
-server.use('/views', function(req, res, next){
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  fs.createReadStream("views.html").pipe(res);
-});
-
-
-server.use('/lists', function(req, res, next){
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  fs.createReadStream("lists.html").pipe(res);
-});
-
-
-server.use('/grid', function(req, res, next){
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  fs.createReadStream("grid.html").pipe(res);
-});
-
-
-server.use('/box', function(req, res, next){
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  fs.createReadStream("box.html").pipe(res);
+  fs.createReadStream("test.html").pipe(res);
 });
 
 

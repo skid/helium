@@ -11,7 +11,7 @@
 
     this.box = new he.util.box({ 
       anchor: options.anchor, 
-      parent: options.parent || doc.documentElement, 
+      parent: options.parent || (he.msie ? doc.body : doc.documentElement), 
       cssClass: 'he-menu',
       hauto: "opposite",
       vauto: "max"
