@@ -18,7 +18,7 @@
   var defaults = {
     global: {
       autoHeight: false,            // If true, the grid element will automatically grow to accomodate all rows
-      wordBreak: true,              // If true, the cells won't have text-overflow ellipsis and rows will differ in height
+      wordBreak: true,              // If true, it will allow breaking words in cells
       pagination: {                 // The pagination config
         element: null,
         size:    50,
@@ -256,7 +256,7 @@
       
       if(col.width){
         attrs.style || (attrs.style = {});
-        attrs.style['min-width'] = attrs.style['width'] = col.width;
+        attrs.style['min-width'] = attrs.style['max-width'] = attrs.style['width'] = col.width;
       }
       content = "<div class='he-cc'>" + content + "</div>";
       return innerHTML ? content : "<div " + makeattrs(attrs) + ">" + content + "</div>";
@@ -307,7 +307,7 @@
 
         var resize = evaluate(cstate.resizable) ? " he-resize" : "";
         html +=
-          "<div style='min-width:"+cstate.width+"px;width:"+cstate.width+"px;' class='he-cell' data-col='" + i + "'><div class='he-cc'>" + 
+          "<div style='max-width:"+cstate.width+"px;min-width:"+cstate.width+"px;width:"+cstate.width+"px;' class='he-cell' data-col='" + i + "'><div class='he-cc'>" + 
             (cstate.title || "") + "</div>" + this.$renderHeaderMenu(cstate) +
           "<div class='he-handle" + resize + "'></div></div>";
       }

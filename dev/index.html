@@ -59,13 +59,14 @@
   <!-- External dependency -->
   <script src="/static/lib/lodash-3.8.0.js"></script><!-- External dependency -->
    
-  * <!-- Automatically loads all js files -->
+  <!-- Automatically loads all js files -->
   <!-- scripts -->
   
   <!-- Some data -->
   <script src="/static/data/countries.js"></script>
   <script src="/static/data/colors.js"></script>
   <script src="/static/data/cities.js"></script>
+  <script src="/static/data/the-world.js"></script>
 </head>
 <body>
   <div id="container">
@@ -194,6 +195,8 @@
       // A scroll list with a custom item renderer. 
       var list1 = he('scrollList', 'list1', { 
         items: COLORS, 
+        multiple: true,
+        nullable: true,
         template: function(item, index){
           return "\<div class='color-square' style='background-color:" + item.v + "'>\</div>" + item.t;
         }
@@ -346,14 +349,280 @@
     
     <h2>Grid</h2>
     <div class="row">
-      <div class="col-12">
+      <div class="col-10">
         <label>The grid has a label, why not</label>
+        <div id="grid1" style="border: solid 1px #e5e5e5; height: 400px"></div>
+        <div id="pagination" style="text-align: center; margin-top: 10px"></div>
       </div>
     </div>
+    
+    <div class="he-modal" id="language-modal" style="width:200px;">
+      <div class="row">
+        <div class="col-12">
+          <h4>Pick Languages</h4>
+          <div id="language-list" style="height: 300px"></div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-4 off-8">
+          <button id="pick-language">OK</button>
+        </div>
+      </div>
+    </div>
+
     <pre><code class="javascript"></code></pre>
     <script>
-    // Grid init code goes here
+      // All the regions 
+      var REGIONS = _.compact(_.uniq(_.pluck(THEWORLD, "region")));
+      // All the subregions
+      var SUBREGIONS = _.compact(_.uniq(_.pluck(THEWORLD, "subregion")));
+      // All languages
+      var LANGUAGES = _.map(_.reduce(_.pluck(THEWORLD, "languages"), _.extend, {}), function(text, value){
+        return { t: text, v: value };
+      }).sort(function(a, b){ return a.t > b.t ? 1 : b.t > a.t ? -1 : 0 });
+
+      // The default page size
+      var PAGE_SIZE = 30;
+      // The entire (filtered) data
+      var DATA = THEWORLD.slice();
+      // The displayed page
+      var PAGE = THEWORLD.slice(0, PAGE_SIZE);
+
+      // Ured for retreving values from nested objects
+      // by using namespaced keys like "name.official"
+      function getKey(item, name){
+        var part, parts = name.split(".");
+        var obj = item;
+        while(obj && (part = parts.shift())){
+          obj = obj[part];
+        }
+        return obj;
+      }
+
+      var modal = he('modal', document.getElementById('language-modal'), { closeAnywhere: false, closeIcon: true });
+      var languages = he('scrollList', document.getElementById('language-list'), { items: LANGUAGES, multiple: true, nullable: true });
+      var ok = he('button', document.getElementById('pick-language')).on('click', function(){
+        modal.close(true);
+      })
+
+      var config = {
+        global: {
+          pagination: {
+            element: document.getElementById('pagination'),
+            size: PAGE_SIZE,
+            links: 7
+          },
+          dataSize: function(){
+            return DATA.length;
+          },
+          pageSize: function(){
+            return PAGE.length;
+          },
+          getCell: getKey,
+          onEdit: function(index, item, name, value, callback){
+            // Handles namespaced names like "name.official"
+            var part, parts = name.split(".");
+            var prop = parts.pop();
+            var obj = item;
+            while(part = parts.shift()){
+              obj = obj[part];
+            }
+            obj[prop] = value;
+            callback();
+          },
+          reset: function(params, callback){
+            var filters  = params.filters;
+            var sorting  = params.sorting;
+            var pageSize = params.pagination.size;
+            var page     = params.pagination.page;
+    
+            // Apply filtering
+            DATA = _.filter(THEWORLD, function(item){
+              for(var name in filters){
+                var value = getKey(item, name);
+                if(value !== undefined){
+                  var filter = filters[name];
+                  for(var cmp in filter){
+                    // Deliberate usage of double equals
+                    if(filter[cmp] == null){
+                      continue;
+                    }
+                    if(cmp === "~" && value.toLowerCase().indexOf(filter[cmp].toLowerCase()) === -1){
+                      return false;
+                    }
+                    if(cmp === ">" && value <= filter[cmp]){
+                      return false;
+                    }
+                    if(cmp === "<" && value >= filter[cmp]){
+                      return false;
+                    }
+                    if(cmp === "in" && filter[cmp].length > 0 && filter[cmp].indexOf(value) === -1){
+                      return false;
+                    }
+                  }
+                }
+              }
+              return true;
+            })
+            .sort(function(a, b){
+              for(var i=0, ii=sorting.length; i<ii; ++i){ 
+                var crit = sorting[i];
+                var dir = crit.direction;
+                var name = crit.name;
+                var aVal = getKey(a, name);
+                var bVal = getKey(b, name);
+                if((dir === "asc" && aVal < bVal) || (dir === "desc" && aVal > bVal)){
+                  return -1;
+                }
+                else if((dir === "asc" && aVal > bVal) || (dir === "desc" && aVal < bVal)){
+                  return 1;
+                }
+              }
+              return 0;
+            });
+    
+            // Pages are 1-indexed
+            callback(PAGE = DATA.slice((page-1)*pageSize, page*pageSize));
+          }
+        },
+        columns: [{
+          attrs: { style: { "text-align": "center" } },
+          width: 60,
+          name: "locked",
+          title: "No Edit",
+          hideable: false,
+          editable: true,
+          sortable: true,
+          typeInfo: "boolean"
+        },{
+          width: 200,
+          name: "name.common",
+          title: "Name",
+          filterable: true,
+          hideable: false,
+          sortable: true,
+          typeInfo: "text",
+          editable: function(item){ return !item.locked; },
+        },{
+          width: 200,
+          name: "name.official",
+          title: "Official Name",
+          filterable: true,
+          resizable: true,
+          sortable: true,
+          typeInfo: "text",
+          editable: function(item){ return !item.locked; },
+        },{
+          width: 120,
+          name: "capital",
+          title: "Capital",
+          filterable: true,
+          resizable: true,
+          sortable: true,
+          typeInfo: "text",
+          editable: function(item){ return !item.locked; },
+        },{
+          width: 100,
+          name: "independence",
+          title: "Independence",
+          filterable: true,
+          resizable: true,
+          sortable: true,
+          typeInfo: "date",
+          editable: true
+        },{
+          width: 100,
+          name: "cca2",
+          title: "ISO Alpha 2",
+          typeInfo: "text",
+          sortable: true,
+          editable: function(item){ return !item.locked; },
+        },{
+          width: 100,
+          name: "cca3",
+          title: "ISO Alpha 3",
+          typeInfo: "text",
+          sortable: true,
+          editable: function(item){ return !item.locked; },
+        },{
+          width: 120,
+          name: "region",
+          title: "Region",
+          filterable: true,
+          resizable: true,
+          editable: true,
+          sortable: true,
+          typeInfo: {
+            type: "enum",
+            items: REGIONS
+          },
+          editable: function(item){ return !item.locked; },
+        },{
+          width: 120,
+          name: "subregion",
+          title: "Subregion",
+          filterable: true,
+          resizable: true,
+          editable: true,
+          sortable: true,
+          typeInfo: {
+            type: "enum",
+            items: SUBREGIONS
+          },
+          editable: function(item){ return !item.locked; },
+        },{
+          attrs: { style: { "text-align": "right" } },
+          width: 120,
+          name: "area",
+          title: "Area km&sup2;",
+          filterable: true,
+          editable: true,
+          resizable: true,
+          sortable: true,
+          typeInfo: {
+            type: "number",
+            format: 2
+          },
+          editable: function(item){ return !item.locked; },
+        },{
+          width: 200,
+          name: "languages",
+          title: "Languages",
+          editable: true,
+          resizable: true,
+          typeInfo: {
+            type: "enum",
+            items: []
+          },
+          template: function(item){
+            return _.values(item.languages).join(", ");
+          },
+          editable: function(item){ 
+            return !item.locked; 
+          },
+          editOptions: {
+            type: "custom",
+            onEdit: function(options, cbOk, cbCancel){
+              languages.val(_.keys(options.value));
+              modal.once('close', function(withOK){
+                withOK ? cbOk(_.zipObject(languages.val(), languages.text())) : cbCancel();
+              });
+              modal.open();
+              // The modal opens in a deferred function
+              setTimeout(function(){
+                languages.el.focus();
+              });
+            }
+          }
+        }]
+      }
+
+      // Init the grid
+      var grid = he('grid', 'grid1', { data: PAGE, config: config });
     </script>
+    <footer style="margin-top:20px; border-top: solid 5px #ededed; height: 200px">
+      That's it!
+    </footer>
   </div>
 </body>
 </html>
