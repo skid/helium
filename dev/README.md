@@ -1,8 +1,8 @@
 # Helium Development
 This is the helium development directory. Here's a quick rundown of the structure:
 
-- The "data" directory contains test data in JSON format.
-- The "lib" directory contains 3rd party libraries. Only lodash is required by helium, the rest are used to simplify development.
+- The "sample-data" directory contains some test data as JS files. Just link these in your page.
+- The "lib" directory contains 3rd party libraries. Lodash is a helium requirement.
 - The "index.html" is the kitchen sink HMTL file.
 - The "index.js" is the kitchen sink JS file.
 - The "server.js" is the node (connect) development server .
