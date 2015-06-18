@@ -51,7 +51,17 @@ A downside of this is that Helium works only on modern browsers (IE10+). Touch d
 
 The helium API reference can be found in the [docs](docs) folder. Each control inherits functionality from an abstract base control and optionally one or more mixins. Some controls are combinations of one or more other controls. In the API reference you will find [Inherits] and [Composed by] sections which will explain which controls are used.  
 
-When browsing the reference for a control keep in mind that it will inherit the methods, options, events and attributes from parent controls, so to have a complete picture, you should take a look at the reference for the inherited controls as well. Controls that are composed of other controls will have attributes that reference their constituents. These controls will have a list of methods and options which are delegated to them. For example, the autocompleteList is composed of a scrollList and an input. It lists the delegated methods, but you should turn to the input and scrollList API reference to see what these do.
+In the API docs you will find the following sections:
+
+- [Requires]: List of helium modules used by this control. Note that the required modules can require other modules themselves.
+- [Properties]: Read-only properties of the control.
+- [Methods]: The control's available methods.
+- [Options]: Available options that can be set when the control is initialized or using the `options()` method
+- [Events]: Events fired by the control that can be listened to with `.on()` and `.once()`
+- [Inherits]: A list of mixins and other controls that this control inherits from. A control will inherit all [Properties], [Methods], [Options] and [Events] from its parents unless **explicitly specified** that it doesn't.
+- [Composed by]: Some complex controls are composed by more simpler ones. In that case methods, properties, options and events can be delegated to the components. 
+
+When browsing the reference for a control you should take a look at the reference for the inherited/component controls as well. For example: the *autocompleteList* is composed of a *scrollList* and an *input*. The documentation does show the delegated methods, but you should take a look at the *scrollList* and *input* docs to see what they do.
 
 #### API Reference Index
 
@@ -64,7 +74,7 @@ When browsing the reference for a control keep in mind that it will inherit the 
 - [List controls](docs/list.md)
 - [Grid](docs/grid.md)
 
-## Demos
+## Demos / Example code
 
 You can find a demo for most of the controls [on this link](http://skid.github.io/helium-kitchen-sink.html). You can fire up the console and start playing with the controls.
 

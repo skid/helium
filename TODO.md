@@ -1,21 +1,8 @@
-# TODOS for version 0.1
-
-#### Documentation
-- Document [Events] where missing
-- Finish README for docs
-- Write tutorial
-
-#### Calendar
-- Fix styles - set sizes in pixels
-
-#### Grid
-- Offer out-of-the-box data binding (the crap you got in index.js)
+# TODOS
 
 #### General BUGS
 
-In chrome/safari/firefox, the grid filter list scrolls to the top after a filter is applied (countries column).
-
-In chrome (possibly others), the number inputs make the page scroll to the top when focused.
+In chrome/safari/firefox, the grid filter list scrolls to the top after a filter is applied (if the list is taller than the viewport).
 
 #### Firefox BUGS
 
@@ -27,7 +14,7 @@ In chrome (possibly others), the number inputs make the page scroll to the top w
 
 ---
 
-# TODOS for version 0.2
+# For version 0.2
 
 #### Bugs
 - In firefox, when the enum filter is applied on the grid, the filter list scrolls back to the top...
