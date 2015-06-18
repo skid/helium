@@ -123,7 +123,7 @@
         var sib = index === "+" ? "nextSibling" : "previousSibling";
         var next = this.$focused || this.el.querySelector('.he-list-item' + (index === "+" ? ":first-child" : ":last-child"));
         
-        if(this.$focused || next.classList.contains('he-hidden') || next.classList.contains('he-optgroup')){
+        if(next && (this.$focused || next.classList.contains('he-hidden') || next.classList.contains('he-optgroup'))){
           while(next = next[sib]){
             if(!next.classList.contains('he-hidden') && !next.classList.contains('he-optgroup')){
               break;

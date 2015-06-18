@@ -56,6 +56,10 @@ The position of the icon. Can be placed before or after the input's text.
 Boolean. Default: `false`.  
 This only works if the input is showing an icon. If set to true, the input will trigger a "click" event when the area of the icon is clicked.
  
+#### floatingLabel
+Boolean. Default: `false`.
+If set to true, the input's value won't be visible while the input is empty, but the text contained in the label will be shown as the input's placeholder. When the input is filled in with some text, the label will be made visible again. This obviously only works if the input has a label defined.
+ 
 #### value 
 The initial value of the input.
 

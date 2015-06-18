@@ -10,8 +10,7 @@
     
     // Sanitize input
     // We keep the value in a private attribute to avoid option-setting it
-    this.$value = this.$sanitize('value' in options ? options.value : element.value);
-
+    this.$value = this.$sanitize('value' in options ? options.value : element.value);    
     this.$subscribe('keyup');
     this.$subscribe('focus');
     this.$subscribe('blur');
@@ -81,7 +80,10 @@
         this.$initial = this.$value;
         this.el.value = this.$format(this.$value);
       }
-
+      
+      console.log(options, this.el.value);
+      this.$setFloatingLabel();
+      
       if(options.silent || options._typing){
         return;
       }
@@ -98,12 +100,17 @@
       label: null,
       maxlength: 0,
       click: null,
-      placeholder: ""
+      placeholder: "",
+      floatingLabel: false
     },
     
     $o: {
       placeholder: function(ctrl, prev){
         ctrl.el.setAttribute('placeholder', ctrl.$options.placeholder);
+        ctrl.$setFloatingLabel();
+      },
+      floatingLabel: function(ctrl, prev){
+        ctrl.$setFloatingLabel();
       },
       icon: function(ctrl){
         ctrl.$clickable();
@@ -122,7 +129,22 @@
         ctrl.$setIcon();
       }
     },
-
+    
+    // A floating label
+    $setFloatingLabel: function(){
+      var label = this.$options.label;
+      var float = this.$options.floatingLabel;
+      
+      if(label && float){
+        // Weird chrome bug: innerText returns blank if the element is hidden.
+        this.option('placeholder', label.textContent);
+        label.style.visibility = this.el.value ? '' : 'hidden';
+      }
+      else if(label) {
+        label.style.visibility = '';
+      }
+    },
+    
     // When invoked it checks whether the input should be made 
     // clickable and adds or removes that functionality.
     $clickable: function(){
@@ -152,6 +174,9 @@
       this.on('he:focus he:blur', function(){ 
         this.$setIcon(); 
       });
+      
+      // Defer the floating label call to allow the label to be initialized
+      _.defer(_.bind(this.$setFloatingLabel, this));
     },
 
     // Sets an icon as a background image to the input. 

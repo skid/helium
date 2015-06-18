@@ -11,6 +11,8 @@
   // Calling it with 2 or 3 arguments will create a new helium control. 
   // Calling it with a single argument will return a reference to an existing helium control. 
   var he = Helium = function(type, element, options){
+    var origel = element;
+    
     if(!type) {
       return null;
     }
@@ -29,7 +31,7 @@
       options = element;
     }
     else if(!element) {
-      throw new Error('No element passed to Helium() constructor.');
+      throw new Error('No element passed to Helium() constructor. You passed ' + origel);
     }
     else if(element.getAttribute('data-heid') in CACHE){
       throw new Error('Element is already initialized as a Helium control');

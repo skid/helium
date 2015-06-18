@@ -26,6 +26,8 @@
         if(!_.isElement(label)){
           this.$options.label = null;
         }
+        // Inputs can have floating labels
+        this.setFloatingLabel && this.setFloatingLabel();
       }
     },
 

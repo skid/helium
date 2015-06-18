@@ -125,7 +125,13 @@
 
     <pre><code class="javascript"></code></pre>
     <script>
-      var input1 = he('input', 'input1', { label: 'input1-l', icon: 'check', iconpos: 'after', click: true }).on('click', function(){
+      var input1 = he('input', 'input1', { 
+        label: 'input1-l', 
+        icon: 'check', 
+        iconpos: 'after', 
+        click: true,
+        floatingLabel: true
+      }).on('click', function(){
         alert('The input has value: ' + this.val());
       });
 
@@ -133,7 +139,8 @@
         label: 'input2-l', 
         format: 5, 
         negative: true,
-        value: 13.3333333333
+        value: 13.3333333333,
+        floatingLabel: true
       }).on('type', function(){
         this.option('error', this.val() < 0 ? "Value must be bigger than 0" : null);
       });
@@ -146,7 +153,8 @@
           onRenderDate: function(date){
             return date.getDay() % 6 ? "" : "weekend";
           }
-        }
+        },
+        floatingLabel: true
       }).on('change', function(){
         if(this.val() && this.val().getDay() % 6 === 0){
           this.option('error', "We don't do weekends");
@@ -210,7 +218,9 @@
       
       // An autocomplete list with a large item set
       var list3 = he('autocompleteList', 'list3', { 
-        items: COUNTRIES 
+        items: COUNTRIES,
+        floatingLabel: true,
+        label: "list3-l"
       });
       
       // A very small item set

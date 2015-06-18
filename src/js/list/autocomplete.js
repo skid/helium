@@ -7,7 +7,7 @@
   var km = he.keymap;
   var findUp = he.util.findUp;
   var allowed = [km.UP, km.DOWN, km.SPACE, km.ENTER, km.ESCAPE];
-  var inputOptions = ['disabled', 'label', 'tooltip', 'placeholder', 'error'];
+  var inputOptions = ['disabled', 'label', 'tooltip', 'placeholder', 'error', 'floatingLabel'];
   var listOptions = ['template', 'filter', 'vget', 'tget', 'value', 'items', 'nullable'];
 
   he.controls.autocompleteList = AutocompleteList;
