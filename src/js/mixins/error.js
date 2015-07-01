@@ -45,7 +45,9 @@
         
         if(label){
           cssClass(label, 'he-error');
-          label.innerHTML += iconHTML("error");
+          if(!label.querySelector('svg')){
+            label.innerHTML += iconHTML("error");
+          }
         }
       }
       else {

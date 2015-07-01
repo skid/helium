@@ -1,16 +1,14 @@
 /**
  * Helium Calendar styles
 **/
-
 .he-calendar {
-  font-size: 14px;
   background: white;
   border: solid 1px #616161;
   color: rgba(100, 100, 100, 1);
-  padding: 2px;
+  padding: 0.2em;
+  width: 20em;
+  height: 16em;
   box-sizing: border-box;
-  width: 294px;
-  height: 242px;
 }
 
 .he-calendar *::selection {
@@ -38,24 +36,23 @@
 .he-calendar .he-dates {
   display: inline-block;
   background: white;
-  margin-left: 20px;
+  margin-left: 0.5em;
 }
 
 .he-calendar .he-years, .he-calendar .he-months {
-  font-size: 1em;
-  width: 40px;
-  margin: 0.1em;
+  width: 2.6em;
+  padding: 0.1em;
   text-align: center;
 }
 
 .he-calendar .he-months > div, .he-calendar .he-years > div {
-  height: 19px;
+  height: 1.26em;
   cursor: pointer;
 }
 
 .he-calendar .he-years > div > svg {
   position: relative;
-  top: -2px;
+  top: -0.2em;
   width: 1.5em;
   height: 1.5em;
   fill: rgba(100, 100, 100, 1);
