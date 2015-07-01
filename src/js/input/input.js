@@ -81,7 +81,6 @@
         this.el.value = this.$format(this.$value);
       }
       
-      console.log(options, this.el.value);
       this.$setFloatingLabel();
       
       if(options.silent || options._typing){
