@@ -114,6 +114,7 @@
         });
         this.$calendar.on('he:change', function(options){
           self.val(this.val());
+          self.close();
         });
       }
       else if(options){
@@ -121,9 +122,9 @@
         this.$calendar.option(options);
       }
     },
-    
+
     open: function(){
-      if(this.$panel){
+      if(this.$panel && !this.$options.disabled){
         this.$calendar.val(this.val());
         this.$panel.show(); 
       }
