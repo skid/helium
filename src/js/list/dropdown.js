@@ -6,7 +6,7 @@
   var km = he.keymap;
   var findUp = he.util.findUp;
   var allowed = [km.UP, km.DOWN, km.SPACE, km.ENTER, km.ESCAPE];
-  var buttonOptions = ['disabled', 'label', 'tooltip', 'error'];
+  var buttonOptions = ['disabled', 'label', 'tooltip', 'error', 'text'];
   var listOptions = ['template', 'filter', 'vget', 'tget', 'value', 'items', 'nullable'];
 
   he.controls.dropdownList = DropdownList;
