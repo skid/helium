@@ -149,6 +149,7 @@
           iconpos: 'after', 
           placeholder: 'Select Date', 
           click: true,
+          autoClose: false,
           datepicker: { position: 'after', hauto: "opposite", vauto: "opposite", parent: container }
         });
         var ctrl1 = createInput('date', '>', opts, this);

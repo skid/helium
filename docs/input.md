@@ -260,6 +260,10 @@ These are the configuration options of the optional calendar sub-control. If set
 Check the documentation for input.calendar and util.box.popover  
 for details about the possible options. 
 
+#### autoClose
+Boolean. Default: `true`.
+Only works if a datepicker calendar is defined. If set to `false`, the calendar will remain open even when the user clicks to select a date.
+
 ### [CSS classes] 
 - he-date
 

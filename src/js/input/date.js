@@ -67,10 +67,12 @@
   DateInput.prototype = he.util.inherits(proto, {
     $defaults: _.defaults({
       format: "ISO",
-      datepicker: null
+      datepicker: null,
+      autoClose: true
     }, proto.$defaults),
 
     $o: {
+      autoClose: function(ctrl, prev){},
       datepicker: function(ctrl, prev){
 
         // It needs to contain datepicker properties
@@ -114,7 +116,7 @@
         });
         this.$calendar.on('he:change', function(options){
           self.val(this.val());
-          self.close();
+          self.$options.autoClose && self.close();
         });
       }
       else if(options){
