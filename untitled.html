@@ -1,0 +1,61 @@
+<div id="results"></div>
+<input id="auto">
+
+
+
+
+
+<script type="text/javascript">
+
+/*  
+ *  [ "abc tenis", "abc ebglish", "abracadabra" ]
+**/
+var resdiv =  document.getElementById('results');
+var input = document.getElementById('auto');
+
+function handleSuccess(results){
+  var best = results[0];
+  var val = input.value;
+  
+  var match = best.substr(0, val.length);
+  var rest = best.substr(val.length);
+  
+  
+  resdiv.innerHTML = best;
+  
+  input.classList.remove('loading');
+}
+  
+function handleError(err, message, xhr){
+  // whatever
+  input.classList.remove('loading');
+}
+
+var to = null;
+
+function doAjax(url){
+  $.ajax({ url: url, dataType: 'json' }).success(function(result){
+    handleSuccess(result);
+    console.log("A");
+  })
+  .error(handleError);
+  clearTimeout(to);
+}
+
+input.addEventListener('keyup', function(){
+  var val = this.value; // ab
+  var url = "/my_backend/url?string=" + $.param(val);
+  
+  if(to){
+    clearTimeout(to);
+  }
+  
+  to = setTimeout(function(){
+    doAjax();
+  }, 200);
+   
+});
+
+console.log("C");
+  
+</script>

@@ -50,7 +50,7 @@
       editable: null,               // If a function/true will make cell editable
       show: true,                   // If a function/false will not show the column
       hideable: true,               // If a function/false will prevent the column from hiding
-      typeInfo: {},                 
+      typeInfo: { type: "text" },                 
       filterOptions: {},            // A dict/function returning a dict - the type and options for the filter widget
       editOptions: {},              // A dict/function returning a dict -  the type and options for the edit widget
       actions: null,                // A dict/function returning a dict - the actions to be rendered in a cell
@@ -159,7 +159,7 @@
     $prepareState: function(){
       this.$cstate.forEach(function(cstate){
         if(!_.isPlainObject(cstate.typeInfo)){
-          cstate.typeInfo = { type: cstate.typeInfo || "text" }
+          cstate.typeInfo = { type: cstate.typeInfo || "text" };
         }
         var info = cstate.typeInfo;
 
