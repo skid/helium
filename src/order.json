@@ -23,6 +23,7 @@
     "list/scroll.js",
     "list/dropdown.js",
     "list/autocomplete.js",
+    "list/combo.js",
     "panel/menu.js",
     "panel/modal.js",
     "grid/resizing.js",

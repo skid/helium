@@ -522,3 +522,37 @@ Works just like the list's "change" event.
 - he-loading (if ajax loading)
 
 ---
+
+## Combo
+
+The combo control is essentially an Autocomplete with 2 important differences: Its value is always the *text* content of the input and it allows entry of custom values that can't be found in the list. Due to this difference, the items can be passed as a simple array of strings.
+
+```js
+var list = he('comboList', document.getElementById('my-input'), {
+  items: [ "Item one", "Item two", "Ttem three" ]
+});
+
+### [Binds to]  
+- HTML &lt;input&gt; element
+
+### [Requires] 
+- list/autocomplete.js
+ 
+### [Inherits] 
+- he.list.autocomplete
+
+### [Methods]
+The combo list has all the methods of the list.autocomplete class, except for these differences:
+
+Methods delegated to the input:
+- `val()`
+
+### [Events]
+
+#### reset 
+The combo list does not fire a "reset" event.
+
+#### change
+Works just like the input's "change" event.
+
+---

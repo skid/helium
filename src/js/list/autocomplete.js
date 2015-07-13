@@ -42,7 +42,7 @@
     };
 
     var self = this;
-    this.list.on('he:change', function(options){
+    this.list.on('he:change', this.__autocompleteChangeHandler = function(options){
       if(self.$options.ajax){
         !this.val() && !options.ajax && this.reset([], { ajax: true });
         self.close();
@@ -79,7 +79,7 @@
       self.close();
     });
 
-    this.input.on('he:blur', function(e){      
+    this.input.on('he:blur', this.__autocompleteBlurHandler = function(e){      
       var text = self.list.text() || "";
       var listval = self.list.val();
       var inputval = this.val();
@@ -127,7 +127,7 @@
         self.close();
       }
     });
-    
+
     this.input.on('he:keydown', function(e){
       if(!self.box.isShown && e.which === km.DOWN && self.list.$items.length){
         self.open();

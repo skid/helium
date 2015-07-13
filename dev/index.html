@@ -164,7 +164,7 @@
         }
       });
     </script>
-    
+
     <h2>Lists</h2>
     <div class="row">
       <div class="col-2">
@@ -178,6 +178,10 @@
       <div class="col-2">
         <label id="list3-l">Autocomplete list</label>
         <input id="list3" placeholder="Start typing...">
+      </div>
+      <div class="col-2">
+        <label id="list7-l">Combo list</label>
+        <input id="list7" placeholder="Type or pick">
       </div>
     </div>
     <div class="row">
@@ -255,6 +259,9 @@
         list6El2.appendChild(f2);
       }
       list6.render();
+
+      // Combo list
+      var list7 = he('comboList', 'list7', { items: COUNTRIES });
     </script>
     
     <h2>Panels</h2>
