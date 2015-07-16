@@ -50,6 +50,10 @@
       this.open();
     });
     
+    this.on('he:focus', function(){
+      this.open();
+    });
+    
     this.on('he:blur', function(){
       this.$prevalue = this.el.value = this.$format(this.$value);
       this.close();
