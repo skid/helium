@@ -17,7 +17,7 @@
     
     // Bind listeners
     this.$subscribe('keydown');
-
+    
     this.on('he:keydown', function (e){
       var el = element;
 
@@ -46,7 +46,7 @@
       }
     });
     
-    this.on('he:focus', function(){
+    this.on('click', function(){
       this.open();
     });
     
@@ -68,7 +68,9 @@
     $defaults: _.defaults({
       format: "ISO",
       datepicker: null,
-      autoClose: true
+      autoClose: true,
+      icon: 'calendar',
+      iconpos: 'after'
     }, proto.$defaults),
 
     $o: {
@@ -102,6 +104,7 @@
 
       if(!options && this.$calendar){
         // TODO: destroy it with he.unregister
+        this.option('click', false);
       }
       else if(options && !this.$calendar){
         this.$panel = new he.util.popover(_.extend({
@@ -118,6 +121,7 @@
           self.val(this.val());
           self.$options.autoClose && self.close();
         });
+        this.option('click', true);
       }
       else if(options){
         // modify it
